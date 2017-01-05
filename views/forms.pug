@@ -1,21 +1,16 @@
 extends layout
 
 block content
-  .offset-lg-1.col-lg-6
-    .page-header
-      h3 Your Forms
+    .col-md-5.left-column.no-float
+      include partials/header
 
-    if forms.length > 0
-      table.table.table-striped
-        tr
-          th Name
+      h1 Here's your<br> list of forms
+
+    .col-md-7.right-column-dark.no-float
+      .question-list
         for form in forms
-          tr
-            td
-              a(href='/forms/'+form._id)= form.name
-    else
-      p You don't have any forms yet. Create one now:
+          .form-tile
+            h3= form.name
+            a(href="/forms/" + form._id) Edit
 
-    a.btn.btn-primary(href='/forms/new')
-      i.fa.fa-caret-up
-      | New Form
+      a.btn.btn-save.pull-right(href="/forms/new") New Form

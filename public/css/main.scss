@@ -95,6 +95,11 @@ html,body,.container {
 .right-column {
     background:#F3F6F6;
 }
+
+.right-column-dark {
+    background:#6356E5;
+}
+
 .col-md-9 {
     background: yellow;
 }
@@ -141,7 +146,7 @@ html,body,.container {
 
 .icon-logo {
   background-image: url(/logo-icon.png);
-  width:50px;
+  width:76px;
   height:50px;
 }
 
@@ -216,4 +221,16 @@ textarea:focus, input:focus{
 
 textarea {
   resize:none;
+}
+
+.form-tile {
+  width:300px;
+  float:left;
+  background-color: #F3F6F6;
+  margin:10px;
+  padding: 0px 5px 0px 5px;
+}
+
+.question-list {
+  display: table-cell;
 }
