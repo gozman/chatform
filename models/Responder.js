@@ -8,4 +8,5 @@ const responderSchema = new mongoose.Schema({
   complete: Boolean
 }, { timestamps: true });
 
+const Responder = mongoose.model('Responder', responderSchema);
 module.exports = Responder;

@@ -7,4 +7,5 @@ const responseSchema = new mongoose.Schema({
   response: {}
 }, { timestamps: true });
 
+const Response = mongoose.model('Response', responseSchema);
 module.exports = Response;
