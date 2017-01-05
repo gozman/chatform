@@ -137,10 +137,13 @@ exports.oauthCallabck = (req, res) => {
           //Create a webhook and point it at the
           var smooch = new Smooch({jwt:access_token});
 
+          console.log(process.env.CHATFORM_BASE_URL + '/bot/' + theForm._id);
+          
           smooch.webhooks.create({
             target: process.env.CHATFORM_BASE_URL + '/bot/' + theForm._id,
             triggers: ['message:appUser']
           }).then((response) => {
+            console.log(response);
             res.redirect('/forms');
           });
         })
