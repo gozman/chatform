@@ -3,9 +3,10 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const responderSchema = new mongoose.Schema({
   formId: {type: ObjectId, index:true},
-  appUserId: {type: String, index:true}
+  appUserId: {type: String, index:true},
   currentFieldId: String,
-  complete: Boolean
+  complete: Boolean,
+  response: {}
 }, { timestamps: true });
 
 const Responder = mongoose.model('Responder', responderSchema);
