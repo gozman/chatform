@@ -127,6 +127,8 @@ exports.oauthCallabck = (req, res) => {
 
     //Exchange code for access token
     exchangeCode(code).then((access_token) => {
+      console.log("GOT AN ACCESS TOKEN: " + access_token);
+
       Form.findById(req.session['current_form'], (err, theForm) => {
         theForm.smoochToken = access_token;
         theForm.save((err, result) => {
@@ -137,8 +139,5 @@ exports.oauthCallabck = (req, res) => {
       console.log(err);
       res.redirect('/forms');
     });
-
   }
-
-  res.redirect("/forms");
 };
