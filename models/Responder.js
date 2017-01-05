@@ -7,3 +7,5 @@ const responderSchema = new mongoose.Schema({
   currentFieldId: String,
   complete: Boolean
 }, { timestamps: true });
+
+module.exports = Responder;

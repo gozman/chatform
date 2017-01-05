@@ -10,3 +10,5 @@ const formSchema = new mongoose.Schema({
   endTrigger: String,
   endMessage: String
 }, { timestamps: true });
+
+module.exports = Form;

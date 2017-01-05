@@ -6,3 +6,5 @@ const responseSchema = new mongoose.Schema({
   responderId: {type: ObjectId, index:true},
   response: {}
 }, { timestamps: true });
+
+module.exports = Response;
