@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  .page-header
+    h3 Your Forms
+
+  if forms.length > 0
+    table.table.table-striped
+      tr
+        th Name
+      for form in forms
+        tr
+          td
+            a(href='/forms/'+form._id)= hook.name
+  else
+    p You don't have any forms yet. Create one now:
+
+  a.btn.btn-primary(href='/forms/new')
+    i.fa.fa-caret-up
+    | New Form

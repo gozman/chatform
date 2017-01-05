@@ -3,6 +3,50 @@ const Form = require('../models/Form');
 const request = require('request');
 
 /**
+ * GET /forms
+ *
+ */
+ exports.getForms = (req, res, next) => {
+  if (!req.user) {
+    return res.redirect('/login');
+  }
+
+  Form.find({ownerId: req.user._id}, (err, docs) => {
+      res.render('forms', { title: 'Your Forms', forms: docs });
+  });
+}
+
+/**
+ * GET /forms/:formId
+ *
+ */
+ exports.getForm = (req, res, next) => {
+   Form.findById(req.params.formId, (err, formInfo) => {
+         if(err) {
+           console.log(err);
+           return res.redirect('/forms');
+         }
+
+         if(hookInfo.owner != req.user._id.toString()) {
+           return res.send(401, "You do not have access to this webhook.");
+         }
+
+        req.session['current_form'];
+        res.render('edit_form', { title: formInfo.name, form: formInfo });
+  });
+
+  res.redirect("/forms");
+};
+
+/**
+ * POST /forms/:formId
+ *
+ */
+exports.postForm = (req, res, next) => {
+  res.json("{'postForm':'unimplemented'}");
+}
+
+/**
  * Exchanges an authorization code, yields an access token.
  */
 function exchangeCode(code) {
@@ -31,7 +75,7 @@ function exchangeCode(code) {
 
 /**
  * GET /connect-to-smooch
- * Contact form page.
+ * OAUTH Redirect.
  */
 exports.oauthCallabck = (req, res) => {
   if (req.query.error) {
@@ -49,7 +93,7 @@ exports.oauthCallabck = (req, res) => {
           res.redirect('/forms');
         })
       });
-    }).catch((err) => {
+    }, (err) => {
       console.log(err);
       res.redirect('/forms');
     });

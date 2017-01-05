@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const formSchema = new mongoose.Schema({
   ownerId: {type: ObjectId, index:true},
