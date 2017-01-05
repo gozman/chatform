@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const Form = require('../models/Form');
 const request = require('request');
+const Smooch = require('smooch-core');
 
 /**
  * GET /forms
@@ -43,7 +44,6 @@ exports.newForm = (req, res) => {
  */
  exports.getForm = (req, res, next) => {
    Form.findById(req.params.formId, (err, form) => {
-     console.log(form);
 
      if(err) {
        console.log(err);
@@ -134,7 +134,15 @@ exports.oauthCallabck = (req, res) => {
       Form.findById(req.session['current_form'], (err, theForm) => {
         theForm.smoochToken = access_token;
         theForm.save((err, result) => {
-          res.redirect('/forms');
+          //Create a webhook and point it at the
+          var smooch = new Smocoh({jwt:access_token});
+
+          smooch.webhooks.create({
+            target: process.env.CHATFORM_BASE_URL + '/bot/' + theForm._id,
+            triggers: ['message:appUser']
+          }).then((response) => {
+            res.redirect('/forms');
+          });
         })
       });
     }, (err) => {

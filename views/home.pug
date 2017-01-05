@@ -3,6 +3,12 @@ extends layout
 block content
   h1 Chatform
   p.lead This is how you make conversational chat forms, bro.
+  p
+  if user
+    a.btn.btn-primary(href='/forms', role='button') Your forms »
+  else
+    a.btn.btn-primary(href='/signup', role='button') Sign up, free »
+
   hr
   .row
     .col-sm-6
