@@ -17,11 +17,32 @@ const request = require('request');
 }
 
 /**
+ * GET /forms/new
+ *
+ */
+exports.newForm = (req, res) => {
+   if (!req.user) {
+     return res.redirect('/login');
+   }
+
+   blankForm = {
+     name: '',
+     fields: {},
+     startTrigger: '',
+     endTrigger: '',
+     startMessage: '',
+     endMessage: ''
+   }
+
+   res.render('edit_form', {title: 'New Form', formInfo: blankForm});
+}
+
+/**
  * GET /forms/:formId
  *
  */
  exports.getForm = (req, res, next) => {
-   Form.findById(req.params.formId, (err, formInfo) => {
+   Form.findById(req.params.formId, (err, form) => {
          if(err) {
            console.log(err);
            return res.redirect('/forms');
@@ -32,7 +53,7 @@ const request = require('request');
          }
 
         req.session['current_form'];
-        res.render('edit_form', { title: formInfo.name, form: formInfo });
+        res.render('edit_form', { title: formInfo.name, formInfo: form, SMOOCH_CLIENT_ID: process.env.SMOOCH_CLIENT_ID});
   });
 
   res.redirect("/forms");
@@ -43,7 +64,25 @@ const request = require('request');
  *
  */
 exports.postForm = (req, res, next) => {
-  res.json("{'postForm':'unimplemented'}");
+  if (!req.user) {
+    return res.redirect('/login');
+  }
+
+  var form;
+
+  if(req.params.formId) {
+    res.json("{'postForm':'unimplemented'}");
+  } else {
+    form = new Form({
+      name: req.body.name,
+      fields: req.body.fields
+    });
+  }
+
+  form.save((err) => {
+    if (err) { console.log(err); }
+    res.redirect("/forms");
+  });
 }
 
 /**

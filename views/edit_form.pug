@@ -1,0 +1,29 @@
+extends layout
+
+block content
+  .page-header
+    h3 Edit Form
+
+  form.form-horizontal(method='POST')
+    input(type='hidden', name='_csrf', value=_csrf)
+    .form-group
+      label(class='col-sm-2 control-label', for='name') Name
+      .col-sm-8
+        input.form-control(type='text', name='name', id='name', autofocus=true, value=formInfo.name)
+    .form-group
+      label(class='col-sm-2 control-label', for='fields') Fields
+      .col-sm-8
+        input.form-control(type='text', name='fields', id='fields', value=formInfo.fields)
+    .form-group.row
+      .col-sm-2
+        button.btn.btn-primary(type='submit')
+          i.fa.fa-envelope
+          | Send
+      .col-sm-2
+        button.btn.btn-primary(type='submit')
+          i.fa.fa-envelope
+          | Send
+        if SMOOCH_CLIENT_ID
+          a.btn.btn-default(href='https://app.smooch.io/oauth/authorize?' + SMOOCH_CLIENT_ID + '=&response_type=code')
+            i.fa.fa-trash
+            | Connect to Smooch

@@ -134,8 +134,12 @@ app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userControl
  * Form controller routes
  */
 app.get('/forms', formController.getForms);
+app.get('/forms/new', formController.newForm);
 app.get('/forms/:formId', formController.getForm);
+
 app.post('/forms/:formId', formController.postForm);
+app.post('/forms/new', formController.postForm);
+
 app.get('/connect-to-smooch', formController.oauthCallabck);
 
 /**
