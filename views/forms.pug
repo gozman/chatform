@@ -11,7 +11,7 @@ block content
       for form in forms
         tr
           td
-            a(href='/forms/'+form._id)= hook.name
+            a(href='/forms/'+form._id)= form.name
   else
     p You don't have any forms yet. Create one now:
 

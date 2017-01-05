@@ -43,20 +43,21 @@ exports.newForm = (req, res) => {
  */
  exports.getForm = (req, res, next) => {
    Form.findById(req.params.formId, (err, form) => {
-         if(err) {
-           console.log(err);
-           return res.redirect('/forms');
-         }
+     console.log(form);
 
-         if(hookInfo.owner != req.user._id.toString()) {
-           return res.send(401, "You do not have access to this webhook.");
-         }
+     if(err) {
+       console.log(err);
+       return res.redirect('/forms');
+     }
 
-        req.session['current_form'];
-        res.render('edit_form', { title: formInfo.name, formInfo: form, SMOOCH_CLIENT_ID: process.env.SMOOCH_CLIENT_ID});
+     if(form.ownerId != req.user._id.toString()) {
+       console.log("oops!");
+       return res.send(401, "You do not have access to this form.");
+     }
+
+    req.session['current_form'] = form._id;
+    res.render('edit_form', { title: form.name, formInfo: form, SMOOCH_CLIENT_ID: process.env.SMOOCH_CLIENT_ID});
   });
-
-  res.redirect("/forms");
 };
 
 /**
@@ -70,10 +71,11 @@ exports.postForm = (req, res, next) => {
 
   var form;
 
-  if(req.params.formId) {
-    res.json("{'postForm':'unimplemented'}");
+  if(req.params.formId != "new") {
+    return res.json("{'postForm':'unimplemented'}");
   } else {
     form = new Form({
+      ownerId: req.user._id,
       name: req.body.name,
       fields: req.body.fields
     });
