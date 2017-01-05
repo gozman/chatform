@@ -56,7 +56,7 @@ exports.newForm = (req, res) => {
      }
 
     req.session['current_form'] = form._id;
-    res.render('edit_form', { title: form.name, formInfo: form, SMOOCH_CLIENT_ID: process.env.SMOOCH_CLIENT_ID});
+    res.render('edit_form', { title: form.name, formInfo: form});
   });
 };
 
@@ -123,7 +123,6 @@ exports.oauthCallabck = (req, res) => {
       console.log(req.query.error);
       res.error(req.query.error);
   } else {
-    const props = config;
     const code = req.query.code;
 
     //Exchange code for access token
