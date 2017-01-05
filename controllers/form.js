@@ -69,22 +69,35 @@ exports.postForm = (req, res, next) => {
     return res.redirect('/login');
   }
 
-  var form;
-
   if(req.params.formId != "new") {
-    return res.json("{'postForm':'unimplemented'}");
+    Form.findById(req.params.formId, (err, form) => {
+      if(err) {
+        console.log(err);
+        return res.redirect('/forms');
+      }
+
+      form.name = req.body.name;
+      form.fields = JSON.parse(req.body.fields);
+
+      theForm = form;
+
+      form.save((err) => {
+        if (err) { console.log(err); }
+        res.redirect("/forms");
+      });
+    });
   } else {
-    form = new Form({
+    var theForm = new Form({
       ownerId: req.user._id,
       name: req.body.name,
       fields: req.body.fields
     });
-  }
 
-  form.save((err) => {
-    if (err) { console.log(err); }
-    res.redirect("/forms");
-  });
+    theForm.save((err) => {
+      if (err) { console.log(err); }
+      res.redirect("/forms");
+    });
+  }
 }
 
 /**
@@ -138,7 +151,7 @@ exports.oauthCallabck = (req, res) => {
           var smooch = new Smooch({jwt:access_token});
 
           console.log(process.env.CHATFORM_BASE_URL + '/bot/' + theForm._id);
-          
+
           smooch.webhooks.create({
             target: process.env.CHATFORM_BASE_URL + '/bot/' + theForm._id,
             triggers: ['message:appUser']

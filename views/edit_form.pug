@@ -1,25 +1,27 @@
 extends layout
 
 block content
-  .page-header
-    h3 Edit Form
+    .col-md-5.left-column.no-float
+      include partials/header
 
-  form.form-horizontal(method='POST')
-    input(type='hidden', name='_csrf', value=_csrf)
-    .form-group
-      label(class='col-sm-2 control-label', for='name') Name
-      .col-sm-8
-        input.form-control(type='text', name='name', id='name', autofocus=true, value=formInfo.name)
-    .form-group
-      label(class='col-sm-2 control-label', for='fields') Fields
-      .col-sm-8
-        input.form-control(type='text', name='fields', id='fields', value=formInfo.fields)
-    .form-group.row
-      .col-sm-2
-        button.btn.btn-primary(type='submit')
-          i.fa.fa-save
-          | Save
-        if formInfo._id && !formInfo.smoochToken
-          a.btn.btn-default(href='https://app.smooch.io/oauth/authorize?client_id=chatform&response_type=code')
-            i.fa.fa-trash
-            | Connect to Smooch
+      p
+        a.btn.btn-question(id='add_text_question', href="#") Add Short Answer Question
+      p
+        a.btn.btn-question(id='add_multiple_choice_question', href="#") Add Multiple Choice Question
+
+
+      form.form-horizontal(method='POST')
+        input(type='hidden', name='_csrf', value=_csrf)
+        input(type='hidden', name='name', value=formInfo.name)
+        input(type='hidden', name='fields' id='fieldData', value=formInfo.fields)
+        input(type='hidden', name='startTrigger', value=formInfo.startTrigger)
+
+    .col-md-7.right-column.no-float(id='question-list')
+      h3= title
+      .offset-md-1.col-md-5.no-float
+        input.meta-input(type='text', name='name', id='name', autofocus=true, value=formInfo.name, placeholder="Name (required)")
+
+        input.meta-input(type='text', name='startTrigger', id='startTrigger', autofocus=true, value=formInfo.startTrigger, placeholder="Start Trigger (optional)")
+
+        a.btn.btn-save.pull-right(id='submit-form') Save
+        a.btn.btn-secondary.pull-right(href="/forms") Cancel

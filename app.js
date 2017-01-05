@@ -33,6 +33,7 @@ dotenv.load({ path: '.env.example' });
 const homeController = require('./controllers/home');
 const userController = require('./controllers/user');
 const formController = require('./controllers/form');
+const botController = require('./controllers/bot');
 
 /**
  * API keys and Passport configuration.
@@ -83,7 +84,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 app.use((req, res, next) => {
-  if (req.path === '/api/upload') {
+  if (req.path === '/api/upload' || req.path.indexOf('/bot') != -1) {
     next();
   } else {
     lusca.csrf()(req, res, next);
@@ -141,6 +142,11 @@ app.post('/forms/:formId', formController.postForm);
 app.post('/forms/new', formController.postForm);
 
 app.get('/connect-to-smooch', formController.oauthCallabck);
+
+/**
+ * Bot controller routes
+ */
+app.post('/bot/:formId', botController.postMessage);
 
 /**
  * Error Handler.

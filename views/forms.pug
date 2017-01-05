@@ -1,20 +1,21 @@
 extends layout
 
 block content
-  .page-header
-    h3 Your Forms
+  .offset-lg-1.col-lg-6
+    .page-header
+      h3 Your Forms
 
-  if forms.length > 0
-    table.table.table-striped
-      tr
-        th Name
-      for form in forms
+    if forms.length > 0
+      table.table.table-striped
         tr
-          td
-            a(href='/forms/'+form._id)= form.name
-  else
-    p You don't have any forms yet. Create one now:
+          th Name
+        for form in forms
+          tr
+            td
+              a(href='/forms/'+form._id)= form.name
+    else
+      p You don't have any forms yet. Create one now:
 
-  a.btn.btn-primary(href='/forms/new')
-    i.fa.fa-caret-up
-    | New Form
+    a.btn.btn-primary(href='/forms/new')
+      i.fa.fa-caret-up
+      | New Form

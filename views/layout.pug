@@ -11,13 +11,9 @@ html
     link(rel='stylesheet', href='/css/main.css')
 
   body
-    include partials/header
-
     .container
-      include partials/flash
-      block content
-
-    include partials/footer
+      .row
+        block content
 
     script(src='/js/lib/jquery-2.2.4.min.js')
     script(src='/js/lib/bootstrap.min.js')
