@@ -105,6 +105,8 @@ function exchangeCode(code) {
       }
 
       try {
+        console.log(JSON.stringify(body, null, 2));
+
         const {access_token} = JSON.parse(body);
         resolve(access_token);
       } catch (err) {
