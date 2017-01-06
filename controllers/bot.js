@@ -97,13 +97,15 @@ exports.postMessage = (req, res, next) => {
               }, (error) => {console.log("FIRST QUESTION ERROR " + err); res.sendStatus(500);});
             });
           } else {
+            console.log("FIRST FIELD: ");
+            console.log(form.fields[0]);
             smooch.appUsers.sendMessage(appUser._id, {
                 role: 'appMaker',
                 type: 'text',
                 text: form.fields[0].question
             }).then((response) => {
               return res.sendStatus(200);
-            }, (error) => {console.log(err); res.sendStatus(500);});
+            }, (error) => {console.log("PATH B ERROR"); console.log(err); res.sendStatus(500);});
           }
         } else {
           //Mid survey!
