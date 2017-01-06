@@ -36,8 +36,6 @@ exports.postMessage = (req, res, next) => {
         });
 
         responder.response = {};
-
-        console.log("CREATING NEW RESPONDER");
       } else {
         //The message contained an answer to something that we want to track!
         var questionIndex = 0;
@@ -81,7 +79,6 @@ exports.postMessage = (req, res, next) => {
           }
         } else if(Object.keys(responder.response).length == 0) {
           //Starting off the survey
-          console.log("STARTING THE SURVEY ON USER " + appUser._id);
           if(form.startMessage && form.startMessage.length) {
             smooch.appUsers.sendMessage(appUser._id, {
                 role: 'appMaker',
@@ -97,8 +94,6 @@ exports.postMessage = (req, res, next) => {
               }, (error) => {console.log("FIRST QUESTION ERROR " + err); res.sendStatus(500);});
             });
           } else {
-            console.log("FIRST FIELD: ");
-            console.log(form.fields[0]);
             smooch.appUsers.sendMessage(appUser._id, {
                 role: 'appMaker',
                 type: 'text',
