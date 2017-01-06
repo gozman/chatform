@@ -4,45 +4,13 @@ const Responder = require('../models/Responder');
 const request = require('request');
 const Smooch = require('smooch-core');
 
+var kue = require('kue');
+var queue = kue.createQueue({redis: process.env.REDIS_URL});
+
 /**
  * POST /bot/:formId
  *
  */
-function sendSmoochMessage(s, appUser, message) {
-  //Are we sending a plain message?
-  if(message && message.question) {
-    if(message.answers.length) {
-      var quickReplies = [];
-
-      for(var i=0; i<message.answers.length; i++) {
-        qr = {
-          type: 'reply',
-          text: message.answers[i],
-          payload: message.answers[i]
-        }
-
-        quickReplies.push(qr);
-      }
-
-      return s.appUsers.sendMessage(appUser._id, {
-          role: 'appMaker',
-          type: 'text',
-          text: message.question,
-          actions: quickReplies
-        });
-  } else {
-    //Recursive, because that's how I roll...
-    return sendSmoochMessage(s, appUser, message.question);
-  }
-  } else {
-    return s.appUsers.sendMessage(appUser._id, {
-        role: 'appMaker',
-        type: 'text',
-        text: message
-    })
-  }
-}
-
 exports.postMessage = (req, res, next) => {
   //Get form
   Form.findById(req.params.formId, (err, form) => {
@@ -51,90 +19,15 @@ exports.postMessage = (req, res, next) => {
       return res.sendStatus(500);
     }
 
-    //Log in to Smooch
-    const smooch = new Smooch({jwt: form.smoochToken});
-
-    //Look up responder
-    const appUser = req.body.appUser;
-    Responder.findOne({'appUserId' : appUser._id}, (err, responder) => {
-
-      if (err) {
-        console.log(err);
-        return res.sendStatus(500);
-      }
-
-      if(!responder) {
-        responder = new Responder({
-          formId: req.params.formId,
-          appUserId: appUser._id,
-          appUser: appUser
-        });
-
-        responder.response = {};
-      } else {
-        //The message contained an answer to something that we want to track!
-        var questionIndex = 0;
-
-        if(responder.response) {
-          questionIndex = Object.keys(responder.response).length;
-          if(questionIndex >= form.fields.length) {
-            return res.sendStatus(200);
-          }
-        } else {
-          responder.response = {};
-        }
-
-        responder.response[form.fields[questionIndex].question] = req.body.messages[0].text;
-        responder.markModified('response');
-      }
-
-      //console.log("SAVING RESPONDER: " + JSON.stringify(responder, null, 2));
-
-      //Save response
-      responder.save((err) => {
-        if(err) {
-          console.log(err);
-          return res.sendStatus(500);
-        }
-
-        //Send next question or gtfo
-        if(Object.keys(responder.response).length === form.fields.length) {
-          //All questions have been answered
-
-          Responder.count({formId: form._id}, (err, count) => {
-            form.responseCount = count;
-            form.save((err) => {
-              if(form.endMessage && form.endMessage.length) {
-                sendSmoochMessage(smooch, appUser, form.endMessage).then((response) => {
-                  return res.sendStatus(200);
-                }, (error) => {console.log(err); res.sendStatus(500);});
-              } else {
-                return res.sendStatus(200);
-              }
-            });
-          });
-        } else if(Object.keys(responder.response).length == 0) {
-          //Starting off the survey
-          if(form.startMessage && form.startMessage.length) {
-            sendSmoochMessage(smooch, appUser, form.startMessage).then((response) => {
-              sendSmoochMessage(smooch, appUser, form.fields[0]).then((response) => {
-                return res.sendStatus(200);
-              }, (error) => {console.log("SEND FIRST QUESTION ERROR " + err); return res.sendStatus(500);});
-            }, (error) => {console.log("START MESSAGE ERROR " + err); return res.sendStatus(500);});
-          } else {
-            sendSmoochMessage(smooch, appUser, form.fields[0]).then((response) => {
-              return res.sendStatus(200);
-            }, (error) => {console.log("PATH B ERROR"); console.log(err); res.sendStatus(500);});
-          }
-        } else {
-          //Mid survey!
-          sendSmoochMessage(smooch, appUser, form.fields[Object.keys(responder.response).length]).then((response) => {
-            return res.sendStatus(200);
-          });
-        }
-
-      });
-
+    queue.create('bot_dispatch', {
+      appUser: req.body.appUser,
+      messageText: req.body.messages[0].text,
+      headers: req.headers,
+      formId: req.params.formId
+    }).save(function(err) {
+      if(err){console.log(err)};
     });
-});
+
+    res.sendStatus(200);
+  });
 }
