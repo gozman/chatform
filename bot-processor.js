@@ -53,9 +53,6 @@ const Smooch = require('smooch-core');
 
 
     jobs.process("bot_dispatch", (job,done) => {
-        //Log in to Smooch
-        const smooch = new Smooch({jwt: form.smoochToken});
-
         //Look up responder
         const appUser = job.data.appUser;
 
@@ -65,8 +62,9 @@ const Smooch = require('smooch-core');
             done();
           }
 
+          //Log in to Smooch
+          const smooch = new Smooch({jwt: form.smoochToken});
           Responder.findOne({'appUserId' : appUser._id}, (err, responder) => {
-
             if (err) {
               console.log(err);
               done();
@@ -93,7 +91,7 @@ const Smooch = require('smooch-core');
                 responder.response = {};
               }
 
-              responder.response[form.fields[questionIndex].question] = req.body.messages[0].text;
+              responder.response[form.fields[questionIndex].question] = job.data.messageText;
               responder.markModified('response');
             }
 
