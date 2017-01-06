@@ -66,17 +66,22 @@ exports.postMessage = (req, res, next) => {
         if(Object.keys(responder.response).length === form.fields.length) {
           //All questions have been answered
 
-          if(form.endMessage && form.endMessage.length) {
-            smooch.appUsers.sendMessage(appUser._id, {
-                role: 'appMaker',
-                type: 'text',
-                text: form.endMessage
-            }).then((response) => {
-              return res.sendStatus(200);
-            }, (error) => {console.log(err); res.sendStatus(500);});
-          } else {
-            return res.sendStatus(200);
-          }
+          Responder.count({formId: form._id}, (err, count) => {
+            form.responseCount = count;
+            form.save((err) => {
+              if(form.endMessage && form.endMessage.length) {
+                smooch.appUsers.sendMessage(appUser._id, {
+                    role: 'appMaker',
+                    type: 'text',
+                    text: form.endMessage
+                }).then((response) => {
+                  return res.sendStatus(200);
+                }, (error) => {console.log(err); res.sendStatus(500);});
+              } else {
+                return res.sendStatus(200);
+              }
+            });
+          });
         } else if(Object.keys(responder.response).length == 0) {
           //Starting off the survey
           if(form.startMessage && form.startMessage.length) {

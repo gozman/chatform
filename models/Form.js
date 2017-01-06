@@ -9,7 +9,8 @@ const formSchema = new mongoose.Schema({
   startTrigger: String,
   stasrtMessage: String,
   endTrigger: String,
-  endMessage: String
+  endMessage: String,
+  responseCount: Number
 }, { timestamps: true });
 
 const Form = mongoose.model('Form', formSchema);
