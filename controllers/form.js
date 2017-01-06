@@ -219,7 +219,6 @@ exports.getResponses = function(req, res, next) {
       }, {
           emptyFieldValue: '',
           delimiter:{
-            'field':'\t',
             'wrap':'"'
           }
         });
