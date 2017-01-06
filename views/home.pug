@@ -1,33 +1,129 @@
-extends layout
-
-block content
-  h1 Chatform
-  p.lead This is how you make conversational chat forms, bro.
-  p
-  if user
-    a.btn.btn-primary(href='/forms', role='button') Your forms »
-  else
-    a.btn.btn-primary(href='/signup', role='button') Sign up, free »
-
-  hr
-  .row
-    .col-sm-6
-      h2 It's Awesome
-      p The best taco bowls are made in Trump Tower Grill. I love Hispanics! Some people have an ability to write placeholder text... It's an art.
-      p
-        a.btn.btn-default(href='#', role='button') View details »
-    .col-sm-6
-      h2 Seriously
-      p I think the only card she has is the Lorem card. An ‘extremely credible source’ has called my office and told me that Barack Obama’s placeholder text is a fraud.
-      p
-        a.btn.btn-default(href='#', role='button') View details »
-    .col-sm-6
-      h2 Absolutely Crazy
-      p We have so many things that we have to do better... and certainly ipsum is one of them. You know, it really doesn’t matter what you write as long as you’ve got a young, and beautiful, piece of text
-      p
-        a.btn.btn-default(href='#', role='button') View details »
-    .col-sm-6
-      h2 Gonna be huge
-      p Look at that text! Would anyone use that? Can you imagine that, the text of your next webpage?! Look at these words.
-      p
-        a.btn.btn-default(href='#', role='button') View details »
+doctype html
+html
+  head
+    title Chatform
+    // link type="text/css" rel="stylesheet" href="/css/style.css"/
+    link(type='text/css', rel='stylesheet', href='/css/font.css')
+    link(type='text/css', rel='stylesheet', href='/css/style.css')
+    link(href='https://fonts.googleapis.com/css?family=Titan+One', rel='stylesheet')
+    link(href='https://fonts.googleapis.com/css?family=Amaranth:400,400i,700,700i', rel='stylesheet')
+  body
+    header
+      .left.logo
+        a(href='http://index.html', target='_self')
+          svg#logo.margin-left(version='1.0', xmlns:x='&ns_extend;', xmlns:i='&ns_ai;', xmlns:graph='&ns_graphs;', xmlns='http://www.w3.org/2000/svg', xmlns:xlink='http://www.w3.org/1999/xlink', x='0px', y='0px', viewbox='0 0 785.4 131', style='enable-background:new 0 0 785.4 131;', xml:space='preserve')
+            style(type='text/css').
+              .st0{fill:#88CCFF;}
+              .st1{fill:#FFFFFF;}
+              .st2{fill:#5E99F7;}
+              .st3{fill:#6356E5;}
+              .st4{fill:#3750E2;}
+            switch
+              foreignobject(requiredextensions='&ns_ai;', x='0', y='0', width='1', height='1')
+                i:pgfref(xlink:href='#adobe_illustrator_pgf')
+              g(i:extraneous='self')
+                g
+                  path.st0(d='M102.5,60.3c-18.2,0.1-39.2,15-46.8,33.3l-8.5,20.6c-4.9,9.5-12.1,16.7-17.1,16.7l10.2,0l0,0l98.9-0.4\
+                  c17-0.1,36.8-14.1,43.9-31.2L199.3,60L102.5,60.3z')
+                  path.st1(d='M77.6,114.9l-4.7,0c0,0,0,0,0,0l12.5-30.3c1.1-2.6,4-4.7,6.6-4.7l4.7,0l-12.5,30.3\
+                  C83.1,112.8,80.1,114.9,77.6,114.9z')
+                  path.st2(d='M87,30.4c-18.2,0.1-39.2,15-46.8,33.3l-7.1,17.1C28.4,92,20,101,14.4,101l10.4,0l0,0l98.9-0.4\
+                  c17-0.1,36.8-14.1,43.9-31.2L183.8,30L87,30.4z')
+                  path.st1(d='M64.6,83.9l-4.7,0c0,0,0,0,0,0l12.5-30.3c1.1-2.6,4-4.7,6.6-4.7l4.7,0L71.2,79.2\
+                  C70.1,81.8,67.1,83.9,64.6,83.9z')
+                  path.st3(d='M72.6,0.4c-18.2,0.1-39.2,15-46.8,33.3L19,50.3C14.2,61.7,5.7,71,0,71l10.4,0l0,0l98.9-0.4\
+                  c17-0.1,36.8-14.1,43.9-31.2L169.4,0L72.6,0.4z')
+                  path.st1(d='M51.6,53.9l-4.7,0c0,0,0,0,0,0l12.5-30.3c1.1-2.6,4-4.7,6.6-4.7l4.7,0L58.2,49.2\
+                  C57.1,51.8,54.1,53.9,51.6,53.9z')
+                  g
+                    path.st3(d='M271.7,53.3c-4.9,0-9.4,1.7-13.5,5.2c-4.1,3.4-6.7,8.1-8,14.1c-1.3,5.9-0.6,10.7,2.1,14.1\
+                    c2.7,3.5,6.4,5.2,11.4,5.2c4.4,0,8.1-1.1,11.2-3.4c3.1-2.3,5.4-5,7-8.1l15.1,5.4c-3,6.3-7.8,11.7-14.3,16.3\
+                    c-6.5,4.5-14.1,6.8-22.6,6.8c-10.2,0-18.1-3.5-23.5-10.4c-5.5-6.9-7.1-15.6-4.9-26c2.2-10.5,7.5-19.2,15.7-26\
+                    c8.3-6.9,17.4-10.3,27.4-10.3c8.7,0,15.4,2.3,20,6.8c4.6,4.5,7,10,7.3,16.4l-17.7,5.6C283.9,57.1,279.6,53.3,271.7,53.3z')
+                    path.st3(d='M327.7,66.5l-8.5,40.2h-18.5L322,5.9h18.5l-8,38c5.2-5,11.9-7.5,20.1-7.5c8.4,0,14.2,2.5,17.4,7.6\
+                    c3.2,5.1,4,11.6,2.4,19.6l-9.1,43.2h-18.5l8.4-40c0.9-4.1,0.5-7.4-1-9.9c-1.6-2.5-4.5-3.8-8.7-3.8c-3.8,0-7.1,1.3-9.9,3.8\
+                    C330.6,59.4,328.7,62.6,327.7,66.5z')
+                    path.st3(d='M376.2,88.1c1.2-5.8,4.1-10.5,8.7-14.1c4.5-3.5,9.9-5.8,16.2-6.7l17.4-2.5c3.5-0.5,5.6-2.1,6.2-4.9\
+                    c0.5-2.6,0-4.7-1.6-6.4c-1.6-1.7-4.3-2.5-8-2.5c-3.9,0-7.2,1.1-9.9,3.2c-2.7,2.1-4.6,4.8-5.5,7.9l-15.7-3.5\
+                    c1.9-5.9,5.9-11.2,12.1-15.7c6.2-4.5,13.5-6.8,22-6.8c10.2,0,17.2,2.4,21,7.3c3.8,4.9,4.9,11.1,3.3,18.7l-7.1,33.7\
+                    c-0.9,4.1-1.3,7.7-1.5,10.9h-17c0-2,0.3-4.8,1-8.2c-5.8,6.8-13.2,10.2-22.3,10.2c-7.1,0-12.3-2-15.8-6.1\
+                    C376.2,98.5,375,93.6,376.2,88.1z M402.2,94.9c4.4,0,8.2-1.2,11.6-3.7c3.3-2.5,5.6-6.5,6.8-12.2l0.6-3.1l-16,2.4\
+                    C399.5,79.2,396,82,395,87c-0.5,2.2-0.1,4.1,1.2,5.6C397.4,94.1,399.4,94.9,402.2,94.9z')
+                    path.st3(d='M487.1,17.7l-4.3,20.5h13.8l-3.5,16.4h-13.8l-6,28.7c-0.6,2.9-0.4,4.9,0.7,6.1c1,1.2,3,1.8,5.7,1.8\
+                    c2.5,0,4.4-0.2,5.8-0.6l-3.2,15.3c-2.9,1.1-6.5,1.7-10.8,1.7c-6.7,0-11.6-1.9-14.7-5.6c-3.1-3.8-4-8.9-2.6-15.5l6.7-31.9h-12.4\
+                    l3.5-16.4h3.5c3.4,0,6.3-1,8.5-3c2.2-2,3.7-4.6,4.4-7.9l2-9.6H487.1z')
+                    path.st3(d='M545.9,21.2c-2.6,0-5,0.7-7.2,2.2c-2.2,1.4-3.7,3.9-4.4,7.3l-1.6,7.5h15.5l-3.3,15.9h-15.5l-11.1,52.6\
+                    h-18.7l11.1-52.6h-11.4l3.3-15.9H514l1.6-7.8c1.6-7.7,5.2-13.9,10.7-18.5c5.5-4.6,12-7,19.6-7c4.1,0,7.1,0.5,8.9,1.4l-3.3,15.6\
+                    C550.1,21.5,548.2,21.2,545.9,21.2z')
+                    path.st3(d='M560.5,46.4c8.3-6.9,17.6-10.3,27.9-10.3s18.1,3.4,23.5,10.3c5.4,6.9,7,15.6,4.7,26\
+                    c-2.2,10.5-7.5,19.2-15.7,26c-8.3,6.9-17.6,10.3-27.9,10.3s-18.1-3.4-23.5-10.3c-5.4-6.9-7-15.5-4.7-26\
+                    C547,62,552.3,53.3,560.5,46.4z M565.4,86.8c2.7,3.4,6.4,5.2,11.2,5.2c4.8,0,9.3-1.7,13.4-5.2c4.1-3.4,6.8-8.2,8.1-14.3\
+                    c1.3-6.1,0.6-10.9-2.1-14.3c-2.7-3.4-6.4-5.2-11.2-5.2c-4.8,0-9.3,1.7-13.4,5.2c-4.1,3.4-6.8,8.2-8.1,14.3\
+                    C562,78.6,562.7,83.4,565.4,86.8z')
+                    path.st3(d='M676.2,37.9l-3.9,18.7c-1.8-0.4-3.6-0.6-5.5-0.6c-5.3,0-9.9,1.5-13.8,4.5c-3.9,3-6.6,8-8,14.8l-6.6,31.3\
+                    h-18.5l14.4-68.5h18l-2.1,10.2c4.9-7.1,12.1-10.7,21.8-10.7C672.9,37.7,674.4,37.7,676.2,37.9z')
+                    path.st3(d='M689.1,106.7h-18.5L685,38.2h17.7l-1.8,8.4c2.4-3.2,5.7-5.7,9.9-7.5c4.2-1.9,8.3-2.8,12.3-2.8\
+                    c9.9,0,15.9,3.8,17.9,11.4c6.5-7.6,14.6-11.4,24.1-11.4c7,0,12.4,2.2,16.2,6.5c3.9,4.4,4.9,10.9,3.1,19.5l-9.4,44.4h-18\
+                    l8.6-40.7c0.8-3.9,0.5-7-1-9.4c-1.5-2.4-4.3-3.6-8.4-3.6c-3.8,0-7.1,1.3-10,3.9c-2.9,2.6-4.7,5.8-5.5,9.6l-8.5,40.1H714\
+                    l8.6-40.7c0.8-3.9,0.5-7-1.1-9.4c-1.5-2.4-4.3-3.6-8.3-3.6c-3.9,0-7.3,1.3-10.1,3.8c-2.9,2.6-4.7,5.8-5.5,9.7L689.1,106.7z')
+          // img src="/logo_full.png" alt="chatform logo"
+      .right
+        .nav
+          ul
+            li
+              a(href='https://smooch.io') about smooch.io
+            li
+              if user
+                a(href='/forms') your forms
+              else
+                a(href='/login') sign in
+            ul
+    section.abstract
+      .left
+        img(src='/bckg.png', alt='chatform-illustration')
+      .right
+        .title
+          // h1>We bring your survey to life</h1
+          h1 Engage with users in a more compelling way
+          div
+            if user
+              a(type='button', href="/forms") Start
+            else
+              a(type='button', href="/signup") Start
+    section.overview
+      .left
+        .title
+          h1.margin-left
+            | How
+            br
+            | it
+            br
+            | works
+          .rect.margin-left
+      .right
+        .details.margin-left
+          .row
+            .icon
+              img(src='/icon.svg', alt='chatform-illustration')
+            .text
+              p
+                | We give you the tools to create your survey
+          .row
+            .icon
+              img(src='/icon.svg', alt='chatform-illustration')
+            .text
+              p
+                | We automatically transform it into a conversation
+          .row
+            .icon
+              img(src='/icon.svg', alt='chatform-illustration')
+            .text
+              p
+                | We let you having your conversationnal survey on whatever channel you want using
+                a(href='https://smooch.io/', target='_blanck') smooch.io
+        .btn.margin-left
+          if user
+            a(type='button', href="/forms") Start
+          else
+            a(type='button', href="/signup") Start
+    footer
