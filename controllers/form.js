@@ -150,7 +150,7 @@ exports.deleteForm = function(req, res, next) {
            return res.sendStatus(500);
          });
        } else {
-         return res.redirect('/forms');     
+         return res.redirect('/forms');
        }
      });
    });
@@ -215,7 +215,7 @@ exports.getResponses = function(req, res, next) {
         res.set('Content-Type', 'text/csv');
         res.send(csv);
 
-      }, {emptyFieldValue: ''});
+      }, {emptyFieldValue: '', delimeter:{'field':'\t'}});
     });
  });
 }
