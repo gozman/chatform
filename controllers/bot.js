@@ -8,7 +8,7 @@ const Smooch = require('smooch-core');
  * POST /bot/:formId
  *
  */
-function sendSmoochMessage = (appUser, message) => {
+function sendSmoochMessage(appUser, message) {
   return smooch.appUsers.sendMessage(appUser._id, {
       role: 'appMaker',
       type: 'text',
