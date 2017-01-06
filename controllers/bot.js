@@ -9,8 +9,6 @@ const Smooch = require('smooch-core');
  *
  */
 exports.postMessage = (req, res, next) => {
-  console.log(req.body);
-
   //Get form
   Form.findById(req.params.formId, (err, form) => {
     if(err) {
@@ -34,7 +32,7 @@ exports.postMessage = (req, res, next) => {
         responder = new Responder({
           formId: req.params.formId,
           appUserId: appUser._id,
-          complete:false,
+          appUser: appUser
         });
 
         responder.response = {};
@@ -44,11 +42,15 @@ exports.postMessage = (req, res, next) => {
 
         if(responder.response) {
           questionIndex = Object.keys(responder.response).length;
+          if(questionIndex >= form.fields.length) {
+            return res.sendStatus(200);
+          }
         } else {
           responder.response = {};
         }
 
         responder.response[form.fields[questionIndex].question] = req.body.messages[0].text;
+        responder.markModified('response');
       }
 
       //Save response
@@ -57,8 +59,8 @@ exports.postMessage = (req, res, next) => {
           console.log(err);
           return res.sendStatus(500);
         }
-        //Send next question
 
+        //Send next question or gtfo
         if(Object.keys(responder.response).length === form.fields.length) {
           //All questions have been answered
 

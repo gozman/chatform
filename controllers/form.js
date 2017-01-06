@@ -1,8 +1,9 @@
 const User = require('../models/User');
 const Form = require('../models/Form');
+const Responder = require('../models/Responder');
 const request = require('request');
 const Smooch = require('smooch-core');
-
+const exporter = require('json-2-csv')
 /**
  * GET /forms
  *
@@ -43,6 +44,10 @@ exports.newForm = (req, res) => {
  *
  */
  exports.getForm = (req, res, next) => {
+   if (!req.user) {
+     return res.redirect('/login');
+   }
+
    Form.findById(req.params.formId, (err, form) => {
 
      if(err) {
@@ -55,7 +60,6 @@ exports.newForm = (req, res) => {
        return res.send(401, "You do not have access to this form.");
      }
 
-    req.session['current_form'] = form._id;
     res.render('edit_form', { title: form.name, formInfo: form});
   });
 };
@@ -101,6 +105,70 @@ exports.postForm = (req, res, next) => {
 }
 
 /**
+ * GET /form/:formId/responses
+ *
+ */
+exports.getResponses = function(req, res, next) {
+  if (!req.user) {
+    return res.redirect('/login');
+  }
+
+  console.log("Searching for responder...");
+  Responder.find({formId: req.params.formId}, (err, responders) => {
+    if(err) {
+      console.log(err);
+      return res.redirect('/forms');
+    }
+
+    console.log("Searching for Form...");
+
+    Form.findById(req.params.formId, (err, form) => {
+      if(err) {
+        console.log(err);
+        return res.redirect('/forms');
+      }
+
+      console.log("Verifying...");
+      if(form && form.ownerId != req.user._id.toString()) {
+        console.log(forms[0]);
+        console.log(req.user._id);
+        return res.send(401, "You do not have access to this form.");
+      }
+
+      console.log("Building csv...");
+
+      //Build clean csv
+      var clean = [];
+      for(var i=0; i<responders.length; i++) {
+        var response = responders[i].response;
+
+        response.givenName = responders[i].appUser.givenName;
+        response.surname = responders[i].appUser.surname;
+        response.platform = responders[i].appUser.clients[0].platform;
+        response.date = responders[i].appUser.signedUpAt;
+        response.appUserId = responders[i].appUser._id;
+        
+        console.log("RESPONSE " + i);
+        console.log(response);
+        clean.push(response);
+      }
+
+      exporter.json2csv(clean, (err, csv) => {
+        if(err) {
+          console.log(err);
+          return res.sendStatus(500);
+        }
+
+        res.set('Content-Type', 'text/csv');
+        res.send(csv);
+
+      }, {emptyFieldValue: ''});
+    });
+ });
+}
+
+
+/**
  * Exchanges an authorization code, yields an access token.
  */
 function exchangeCode(code) {
@@ -139,12 +207,13 @@ exports.oauthCallabck = (req, res) => {
       res.error(req.query.error);
   } else {
     const code = req.query.code;
+    const state = req.query.state;
 
     //Exchange code for access token
     exchangeCode(code).then((access_token) => {
       console.log("GOT AN ACCESS TOKEN: " + access_token);
 
-      Form.findById(req.session['current_form'], (err, theForm) => {
+      Form.findById(state, (err, theForm) => {
         theForm.smoochToken = access_token;
         theForm.save((err, result) => {
           //Create a webhook and point it at the

@@ -13,6 +13,11 @@ block content
         for form in forms
           .form-tile
             h3= form.name
-            a(href="/forms/" + form._id) Edit
+            if !form.smoochToken
+              a(href="/forms/" + form._id) Edit &nbsp; &nbsp;
+              if form.fields
+                a(href='https://app.smooch.io/oauth/authorize?client_id=chatform&response_type=code&state='+form._id) Publish
+            else
+              a(href="/forms/"+form._id+"/responses") Results
 
       a.btn.btn-save.pull-right(href="/forms/new") New Form
