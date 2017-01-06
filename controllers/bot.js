@@ -75,13 +75,13 @@ exports.postMessage = (req, res, next) => {
                 text: form.endMessage
             }).then((response) => {
               return res.sendStatus(200);
-            });
+            }, (error) => {console.log(err); res.sendStatus(500);});
           } else {
             return res.sendStatus(200);
           }
         } else if(Object.keys(responder.response).length == 0) {
           //Starting off the survey
-          console.log("STARTING THE SURVEY");
+          console.log("STARTING THE SURVEY ON USER " + appUser._id);
           if(form.startMessage && form.startMessage.length) {
             smooch.appUsers.sendMessage(appUser._id, {
                 role: 'appMaker',
@@ -92,9 +92,9 @@ exports.postMessage = (req, res, next) => {
                   role: 'appMaker',
                   type: 'text',
                   text: form.fields[0].question
-              }).then((response) => {
+              }, (error) => {console.log(err); res.sendStatus(500);}).then((response) => {
                 return res.sendStatus(200);
-              });
+              }, (error) => {console.log(err); res.sendStatus(500);});
             });
           } else {
             smooch.appUsers.sendMessage(appUser._id, {
@@ -103,7 +103,7 @@ exports.postMessage = (req, res, next) => {
                 text: form.fields[0].question
             }).then((response) => {
               return res.sendStatus(200);
-            });
+            }, (error) => {console.log(err); res.sendStatus(500);});
           }
         } else {
           //Mid survey!
