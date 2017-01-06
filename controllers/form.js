@@ -82,6 +82,10 @@ exports.postForm = (req, res, next) => {
 
       form.name = req.body.name;
       form.fields = JSON.parse(req.body.fields);
+      form.startTrigger = req.body.startTrigger;
+      form.startMessage = req.body.startMessage;
+      form.endMessage = req.body.endMessage;
+      form.endTrigger = req.body.endTrigger;
 
       theForm = form;
 
@@ -94,7 +98,11 @@ exports.postForm = (req, res, next) => {
     var theForm = new Form({
       ownerId: req.user._id,
       name: req.body.name,
-      fields: req.body.fields
+      fields: req.body.fields,
+      startTrigger: req.body.startTrigger,
+      startMessage: req.body.startMessage,
+      endMessage: req.body.endMessage,
+      endTrigger: req.body.endTrigger
     });
 
     theForm.save((err) => {
@@ -147,7 +155,7 @@ exports.getResponses = function(req, res, next) {
         response.platform = responders[i].appUser.clients[0].platform;
         response.date = responders[i].appUser.signedUpAt;
         response.appUserId = responders[i].appUser._id;
-        
+
         console.log("RESPONSE " + i);
         console.log(response);
         clean.push(response);
