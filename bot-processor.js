@@ -96,7 +96,7 @@ const Smooch = require('smooch-core');
                 responder.response = {};
               }
 
-              responder.response['"' + form.fields[questionIndex].question + '"'] = job.data.messageText;
+              responder.response['\"' + form.fields[questionIndex].question + '\"'] = job.data.messageText;
               responder.markModified('response');
             }
 
