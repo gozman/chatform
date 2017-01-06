@@ -98,7 +98,7 @@ exports.postForm = (req, res, next) => {
     var theForm = new Form({
       ownerId: req.user._id,
       name: req.body.name,
-      fields: req.body.fields,
+      fields: JSON.parse(req.body.fields),
       startTrigger: req.body.startTrigger,
       startMessage: req.body.startMessage,
       endMessage: req.body.endMessage,
