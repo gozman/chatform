@@ -73,7 +73,10 @@ html
             li
               a(href='https://smooch.io') about smooch.io
             li
-              a(href='/login') sign in
+              if user
+                a(href='/forms') your forms
+              else
+                a(href='/login') sign in
             ul
     section.abstract
       .left
