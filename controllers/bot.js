@@ -36,6 +36,8 @@ exports.postMessage = (req, res, next) => {
         });
 
         responder.response = {};
+
+        console.log("CREATING NEW RESPONDER");
       } else {
         //The message contained an answer to something that we want to track!
         var questionIndex = 0;
@@ -52,6 +54,8 @@ exports.postMessage = (req, res, next) => {
         responder.response[form.fields[questionIndex].question] = req.body.messages[0].text;
         responder.markModified('response');
       }
+
+      console.log("SAVING RESPONDER: " + JSON.stringify(responder, null, 2));
 
       //Save response
       responder.save((err) => {
@@ -77,7 +81,7 @@ exports.postMessage = (req, res, next) => {
           }
         } else if(Object.keys(responder.response).length == 0) {
           //Starting off the survey
-
+          console.log("STARTING THE SURVEY");
           if(form.startMessage && form.startMessage.length) {
             smooch.appUsers.sendMessage(appUser._id, {
                 role: 'appMaker',
