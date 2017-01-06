@@ -315,3 +315,40 @@ textarea {
   font-weight:bold;
   color: #90EEE1;
 }
+
+#add_text_question {
+  margin-top:250px;
+  margin-left: 100px;
+}
+
+#add_multiple_choice_question {
+  margin-left:100px;
+}
+
+.navbar-nav {
+  > li > a {
+    color: $navbar-default-link-color;
+
+    &:hover,
+    &:focus {
+      color: $navbar-default-link-hover-color;
+      background-color: transparent;
+    }
+  }
+  > .active > a {
+    &,
+    &:hover,
+    &:focus {
+      color: $navbar-default-link-active-color;
+      background-color: transparent;
+    }
+  }
+  > .disabled > a {
+    &,
+    &:hover,
+    &:focus {
+      color: $navbar-default-link-disabled-color;
+      background-color: transparent;
+    }
+  }
+}
