@@ -143,6 +143,7 @@ exports.deleteForm = function(req, res, next) {
        }
 
        if(form.smoochToken && form.smoochWebHookId) {
+         var smooch = new Smooch({jwt:form.smoochToken});
          smooch.webhooks.delete(form.smoochWebHookId).then((result) => {
            return res.redirect('/forms');
          }, (err) => {
