@@ -8,8 +8,8 @@ const Smooch = require('smooch-core');
  * POST /bot/:formId
  *
  */
-function sendSmoochMessage(appUser, message) {
-  return smooch.appUsers.sendMessage(appUser._id, {
+function sendSmoochMessage(s, appUser, message) {
+  return s.appUsers.sendMessage(appUser._id, {
       role: 'appMaker',
       type: 'text',
       text: message
@@ -78,7 +78,7 @@ exports.postMessage = (req, res, next) => {
             form.responseCount = count;
             form.save((err) => {
               if(form.endMessage && form.endMessage.length) {
-                sendSmoochMessage(appUser, form.endMessage).then((response) => {
+                sendSmoochMessage(smooch, appUser, form.endMessage).then((response) => {
                   return res.sendStatus(200);
                 }, (error) => {console.log(err); res.sendStatus(500);});
               } else {
@@ -89,19 +89,19 @@ exports.postMessage = (req, res, next) => {
         } else if(Object.keys(responder.response).length == 0) {
           //Starting off the survey
           if(form.startMessage && form.startMessage.length) {
-            sendSmoochMessage(appUser, form.startMessage).then((response) => {
-              sendSmoochMessage(appUser, form.fields[0].question).then((response) => {
+            sendSmoochMessage(smooch, appUser, form.startMessage).then((response) => {
+              sendSmoochMessage(smooch, appUser, form.fields[0].question).then((response) => {
                 return res.sendStatus(200);
               }, (error) => {console.log("SEND FIRST QUESTION ERROR " + err); return res.sendStatus(500);});
             }, (error) => {console.log("START MESSAGE ERROR " + err); return res.sendStatus(500);});
           } else {
-            sendSmoochMessage(appUser, form.fields[0].question).then((response) => {
+            sendSmoochMessage(smooch, appUser, form.fields[0].question).then((response) => {
               return res.sendStatus(200);
             }, (error) => {console.log("PATH B ERROR"); console.log(err); res.sendStatus(500);});
           }
         } else {
           //Mid survey!
-          sendSmoochMessage(appUser, form.fields[Object.keys(responder.response).length].question).then((response) => {
+          sendSmoochMessage(smooch, appUser, form.fields[Object.keys(responder.response).length].question).then((response) => {
             return res.sendStatus(200);
           });
         }
