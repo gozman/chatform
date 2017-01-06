@@ -114,6 +114,50 @@ exports.postForm = (req, res, next) => {
 }
 
 /**
+ * GET /form/:formId/delete
+ *
+ */
+
+exports.deleteForm = function(req, res, next) {
+  if (!req.user) {
+    return res.redirect('/login');
+  }
+
+  Form.findById(req.params.formId, (err, form) => {
+
+    if(err) {
+      console.log(err);
+      return res.redirect('/forms');
+    }
+
+    if(form.ownerId != req.user._id.toString()) {
+      console.log("oops!");
+      return res.send(401, "You do not have access to this form.");
+    }
+
+   form.remove((err) => {
+     Responder.remove({formId: req.params.formId}, (err) => {
+       if(err) {
+         console.log(err);
+         return res.sendStatus(500);
+       }
+
+       if(form.smoochToken && form.smoochWebHookId) {
+         smooch.webhooks.delete(form.smoochWebHookId).then((result) => {
+           return res.redirect('/forms');
+         }, (err) => {
+           console.log(err);
+           return res.sendStatus(500);
+         });
+       } else {
+         return res.redirect('/forms');     
+       }
+     });
+   });
+ });
+}
+
+/**
  * GET /form/:formId/responses
  *
  */
@@ -235,7 +279,16 @@ exports.oauthCallabck = (req, res) => {
             triggers: ['message:appUser']
           }).then((response) => {
             console.log(response);
-            res.redirect('/forms');
+
+            theForm.smoochWebHookId = response.webhook._id;
+            theForm.save((err) => {
+              if(err) {
+                console.log(err);
+                res.redirect('/forms');
+              }
+
+              res.redirect('/forms');
+            });
           });
         })
       });

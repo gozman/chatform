@@ -21,6 +21,8 @@ block content
             if !form.smoochToken
               a(href="/forms/" + form._id) Edit &nbsp; &nbsp;
               if form.fields
-                a(href='https://app.smooch.io/oauth/authorize?client_id=chatform&response_type=code&state='+form._id) Publish
+                a(href='https://app.smooch.io/oauth/authorize?client_id=chatform&response_type=code&state='+form._id) Publish &nbsp; &nbsp;
+              a(href="/forms/"+form._id+"/delete") Delete
             else
-              a(href="/forms/"+form._id+"/responses") Results
+              a(href="/forms/"+form._id+"/responses") Results &nbsp; &nbsp;
+              a(href="/forms/"+form._id+"/delete") Delete

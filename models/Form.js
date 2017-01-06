@@ -10,7 +10,8 @@ const formSchema = new mongoose.Schema({
   startMessage: String,
   endTrigger: String,
   endMessage: String,
-  responseCount: Number
+  responseCount: Number,
+  smoochWebHookId: String
 }, { timestamps: true });
 
 const Form = mongoose.model('Form', formSchema);
