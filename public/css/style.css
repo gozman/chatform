@@ -28,6 +28,8 @@ header, section, footer {
 header{
     position: fixed;
     top:0;
+    left: 50%;
+    transform: translateX(-50%);
     height: 80px;
     width:100%;
     background-color: #6356e5;
@@ -46,14 +48,14 @@ h1{
     width: 75%;*/
     padding-bottom: 45px;
     font-size: 4.3em;
-    margin-right: 100px;
+    /*margin-right: 100px;*/
 }
-button{
+.btn a{
     font-family: 'Amaranth', sans-serif;
     font-weight: 400;
     font-size: 16px;
     letter-spacing: 2px;
-    padding:20px 60px;
+    padding: 20px 60px;
     border-radius: 50px;
 }
 a{
@@ -61,6 +63,10 @@ a{
 }
 .margin-left{
     margin-left: 100px;
+    margin-right: 0px;
+}
+.margin-right{
+    margin-right: 100px;
 }
 .left, .right{
     display: inline-block;
@@ -113,12 +119,13 @@ a{
     top: 50%;
     transform: translateY(-50%);
 }
-.abstract button{
+.abstract .btn a{
     background-color: #6356e5;
     border: 1px solid #f3f6f6;
     color: #f3f6f6;
+    margin-right: 1.5rem;
 }
-.abstract button:hover{
+.abstract .btn a:hover{
     background-color: #90eee1;
     border: 1px solid #90eee1;
     color: #6356e5;
@@ -159,22 +166,53 @@ a{
     /*position: relative;
     top: -15%;
     text-align: center; --- if center */
-    position: relative;
-    top: -8%;
+    /*position: relative;
+    top: -8%;*/
+    margin-top: 1.5rem;
 }
-.overview button{
+.overview .btn a{
+    font-family: 'Amaranth', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    letter-spacing: 2px;
+    padding: 20px 60px;
+    border-radius: 50px;
     background-color: #90eee1;
     border: 1px solid #90eee1;
     color: #f3f6f6;
 }
-.overview button:hover{
+.overview .btn a:hover{
     background-color: #f3f6f6;
     border: 1px solid #90eee1;
     color: #90eee1;
+    text-decoration: none;
 }
 .overview a{
     color: #90eee1;
 }
 .overview a:hover{
     text-decoration: line-through;
+}
+footer{
+    background-color: #6356e5;
+    color: #f3f6f6;
+    height: 50vh;
+}
+.sponsor{
+    position: relative;
+    top:50%;
+    transform: translateY(-50%);
+    text-align: center;
+}
+.sponsor p, img{
+    display: inline-block;
+}
+.sponsor p{
+    margin-right: 0.19rem;
+}
+.sponsor img{
+    height: 1rem;
+    position: relative;
+    top: 0.19rem;
+    margin-left: 0.19rem;
 }

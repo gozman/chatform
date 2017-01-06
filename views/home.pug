@@ -73,57 +73,66 @@ html
             li
               a(href='https://smooch.io') about smooch.io
             li
-              if user
-                a(href='/forms') your forms
-              else
-                a(href='/login') sign in
+              a(href='/login') sign in
             ul
     section.abstract
       .left
-        img(src='/bckg.png', alt='chatform-illustration')
+        img(src='/bckg.svg', alt='chatform-illustration')
       .right
         .title
           // h1>We bring your survey to life</h1
-          h1 Engage with users in a more compelling way
-          div
+          h1.margin-right Turn your survey into a conversation
+          .btn
             if user
-              a(type='button', href="/forms") Start
+              a(href='/forms') Start
             else
-              a(type='button', href="/signup") Start
+              a(href='/signup') Start
+            a(href='') Watch a video
     section.overview
       .left
         .title
-          h1.margin-left
-            | How
-            br
-            | it
-            br
-            | works
+          // h1 class="margin-left">How </br>it </br>works</h1
+          h1.margin-left Engage with users in a more compelling way
           .rect.margin-left
       .right
         .details.margin-left
           .row
             .icon
-              img(src='/icon.svg', alt='chatform-illustration')
+              img(src='/icon_focus.svg', alt='chatform-illustration')
             .text
               p
-                | We give you the tools to create your survey
+                | Keep users focused and engaged by questioning them on the beat of a conversation
           .row
             .icon
-              img(src='/icon.svg', alt='chatform-illustration')
+              img(src='/icon_boost.svg', alt='chatform-illustration')
             .text
               p
-                | We automatically transform it into a conversation
+                | Boost completion rates by making the act of answering more natural
           .row
             .icon
-              img(src='/icon.svg', alt='chatform-illustration')
+              img(src='/icon_worflow.svg', alt='chatform-illustration')
             .text
               p
-                | We let you having your conversationnal survey on whatever channel you want using
+                | Without even changing your workflow by downloading the responses as CSV or XLSX
+          .row
+            .icon
+              img(src='/icon_channels.svg', alt='chatform-illustration')
+            .text
+              p
+                | Deploy it on whatever channel you want using
                 a(href='https://smooch.io/', target='_blanck') smooch.io
-        .btn.margin-left
-          if user
-            a(type='button', href="/forms") Start
-          else
-            a(type='button', href="/signup") Start
+          .row
+            .icon
+              img(src='/icon_open_source.svg', alt='chatform-illustration')
+            .text
+              p
+                | Brillant solutions are even better when they are
+                a(href='https://smooch.io/', target='_blanck') Open Source
+                | , we can't wait to see what you will do with it.
+          .btn
+            a(href='/forms') Try a survey
     footer
+      .sponsor
+        p Powered by
+        a(href='https://smooch.io/', target='_blanck')
+          img(src='/smooch_logo.svg', alt="smooch's logo")
