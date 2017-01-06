@@ -55,7 +55,7 @@ exports.postMessage = (req, res, next) => {
         responder.markModified('response');
       }
 
-      console.log("SAVING RESPONDER: " + JSON.stringify(responder, null, 2));
+      //console.log("SAVING RESPONDER: " + JSON.stringify(responder, null, 2));
 
       //Save response
       responder.save((err) => {
@@ -92,9 +92,9 @@ exports.postMessage = (req, res, next) => {
                   role: 'appMaker',
                   type: 'text',
                   text: form.fields[0].question
-              }, (error) => {console.log(err); res.sendStatus(500);}).then((response) => {
+              }, (error) => {console.log("START MESSAGE ERROR " + err); res.sendStatus(500);}).then((response) => {
                 return res.sendStatus(200);
-              }, (error) => {console.log(err); res.sendStatus(500);});
+              }, (error) => {console.log("FIRST QUESTION ERROR " + err); res.sendStatus(500);});
             });
           } else {
             smooch.appUsers.sendMessage(appUser._id, {
