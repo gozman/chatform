@@ -9,11 +9,38 @@ const Smooch = require('smooch-core');
  *
  */
 function sendSmoochMessage(s, appUser, message) {
-  return s.appUsers.sendMessage(appUser._id, {
-      role: 'appMaker',
-      type: 'text',
-      text: message
-  })
+  //Are we sending a plain message?
+  if(message && message.question) {
+    if(message.answers.length) {
+      var quickReplies = [];
+
+      for(var i=0; i<message.answers.length; i++) {
+        qr = {
+          type: 'reply',
+          text: message.answers[i],
+          payload: message.answers[i]
+        }
+
+        quickReplies.push(qr);
+      }
+
+      return s.appUsers.sendMessage(appUser._id, {
+          role: 'appMaker',
+          type: 'text',
+          text: message.question,
+          actions: quickReplies
+        });
+  } else {
+    //Recursive, because that's how I roll...
+    return sendSmoochMessage(s, appUser, message.question);
+  }
+  } else {
+    return s.appUsers.sendMessage(appUser._id, {
+        role: 'appMaker',
+        type: 'text',
+        text: message
+    })
+  }
 }
 
 exports.postMessage = (req, res, next) => {
@@ -90,18 +117,18 @@ exports.postMessage = (req, res, next) => {
           //Starting off the survey
           if(form.startMessage && form.startMessage.length) {
             sendSmoochMessage(smooch, appUser, form.startMessage).then((response) => {
-              sendSmoochMessage(smooch, appUser, form.fields[0].question).then((response) => {
+              sendSmoochMessage(smooch, appUser, form.fields[0]).then((response) => {
                 return res.sendStatus(200);
               }, (error) => {console.log("SEND FIRST QUESTION ERROR " + err); return res.sendStatus(500);});
             }, (error) => {console.log("START MESSAGE ERROR " + err); return res.sendStatus(500);});
           } else {
-            sendSmoochMessage(smooch, appUser, form.fields[0].question).then((response) => {
+            sendSmoochMessage(smooch, appUser, form.fields[0]).then((response) => {
               return res.sendStatus(200);
             }, (error) => {console.log("PATH B ERROR"); console.log(err); res.sendStatus(500);});
           }
         } else {
           //Mid survey!
-          sendSmoochMessage(smooch, appUser, form.fields[Object.keys(responder.response).length].question).then((response) => {
+          sendSmoochMessage(smooch, appUser, form.fields[Object.keys(responder.response).length]).then((response) => {
             return res.sendStatus(200);
           });
         }
