@@ -102,7 +102,8 @@ exports.postForm = (req, res, next) => {
       startTrigger: req.body.startTrigger,
       startMessage: req.body.startMessage,
       endMessage: req.body.endMessage,
-      endTrigger: req.body.endTrigger
+      endTrigger: req.body.endTrigger,
+      responseCount: 0
     });
 
     theForm.save((err) => {

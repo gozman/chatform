@@ -3,6 +3,9 @@
     li.icon-logo
 
     li(class=(title == 'Home') ? 'active' : undefined)
-      a(href='/') Home
-    li
-      a(href='/status') Status
+      a(href='/forms') Forms
+    if user
+      li
+        a(href='/status') Status
+      li
+        a(href="/logout") Log out

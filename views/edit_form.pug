@@ -15,13 +15,19 @@ block content
         input(type='hidden', name='name', value=formInfo.name)
         input(type='hidden', name='fields' id='fieldData', value=formInfo.fields)
         input(type='hidden', name='startTrigger', value=formInfo.startTrigger)
+        input(type='hidden', name='startMessage', value=formInfo.startMessage)
+        input(type='hidden', name='endMessage', value=formInfo.endMessage)
 
     .col-md-7.right-column.no-float(id='question-list')
       h3= title
       .offset-md-1.col-md-5.no-float
         input.meta-input(type='text', name='name', id='name', autofocus=true, value=formInfo.name, placeholder="Name (required)")
 
-        input.meta-input(type='text', name='startTrigger', id='startTrigger', autofocus=true, value=formInfo.startTrigger, placeholder="Start Trigger (optional)")
+        input.meta-input(type='text', name='startTrigger', id='startTrigger', autofocus=true, value=formInfo.startTrigger, placeholder="Trigger Phrase (optional)")
+
+        input.meta-input(type='text', name='startMessage', id='startMessage', autofocus=true, value=formInfo.startMessage, placeholder="Welcome Message (optional)")
+
+        input.meta-input(type='text', name='endMessage', id='endMessage', autofocus=true, value=formInfo.endMessage, placeholder="Goodbye Message (optional)")
 
         a.btn.btn-save.pull-right(id='submit-form') Save
         a.btn.btn-secondary.pull-right(href="/forms") Cancel

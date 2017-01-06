@@ -16,7 +16,7 @@ block content
         for form in forms
           .form-tile
             h3= form.name
-            p= form.responseCount
+            p Responses: #{form.responseCount}
 
             if !form.smoochToken
               a(href="/forms/" + form._id) Edit &nbsp; &nbsp;

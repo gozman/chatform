@@ -7,7 +7,7 @@ $(document).ready(function() {
     var questionElement = "<div class='question-panel'><a class='btn btn-remove pull-right'>Remove Question</a><textarea rows='2' cols='85' placeholder='Add your question here'>" + formFields[i].question + "</textarea>"
     if(i==0) {
       //First form field, insert after start trigger
-      $(questionElement).insertAfter("#startTrigger");
+      $(questionElement).insertAfter("#startMessage");
     } else {
       $(questionElement).insertAfter(".question-panel:last");
     }
@@ -19,7 +19,7 @@ $(document).ready(function() {
     if($('.question-panel').length) {
       $(questionElement).insertAfter(".question-panel:last");
     } else {
-      $(questionElement).insertAfter("#startTrigger");
+      $(questionElement).insertAfter("#startMessage");
     }
   });
 
@@ -31,6 +31,8 @@ $(document).ready(function() {
   $('#submit-form').click(function(event) {
     $("input[name='name']").val($("#name").val());
     $("input[name='startTrigger']").val($("#startTrigger").val());
+    $("input[name='startMessage']").val($("#startMessage").val());
+    $("input[name='endMessage']").val($("#endMessage").val());
 
     var fields = [];
     //Build fields from questions
