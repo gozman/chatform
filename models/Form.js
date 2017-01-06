@@ -7,7 +7,7 @@ const formSchema = new mongoose.Schema({
   smoochToken: String,
   fields: [{}],
   startTrigger: String,
-  stasrtMessage: String,
+  startMessage: String,
   endTrigger: String,
   endMessage: String,
   responseCount: Number
