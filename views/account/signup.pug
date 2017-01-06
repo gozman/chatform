@@ -1,24 +1,30 @@
 extends ../layout
 
 block content
-  .page-header
-    h3 Sign up
-  form.form-horizontal(id='signup-form', method='POST')
-    input(type='hidden', name='_csrf', value=_csrf)
-    .form-group
-      label.col-sm-3.control-label(for='email') Email
-      .col-sm-7
-        input.form-control(type='email', name='email', id='email', placeholder='Email', autofocus, required)
-    .form-group
-      label.col-sm-3.control-label(for='password') Password
-      .col-sm-7
-        input.form-control(type='password', name='password', id='password', placeholder='Password', required)
-    .form-group
-      label.col-sm-3.control-label(for='confirmPassword') Confirm Password
-      .col-sm-7
-        input.form-control(type='password', name='confirmPassword', id='confirmPassword', placeholder='Confirm Password', required)
-    .form-group
-      .col-sm-offset-3.col-sm-7
-        button.btn.btn-success(type='submit')
-          i.fa.fa-user-plus
-          | Signup
+
+  .col-md-12.left-column.no-float
+
+    .logo-full
+
+    .form-block
+        .col-md-1
+          p &nbsp;
+        .col-md-5.white-block
+          h3 Sign Up
+          form.form-horizontal(id='signup-form', method='POST')
+            input(type='hidden', name='_csrf', value=_csrf)
+            input.form-control(type='email', name='email', id='email', placeholder='Email', autofocus, required)
+            input.form-control(type='password', name='password', id='password', placeholder='Password', required)
+            input.form-control(type='password', name='confirmPassword', id='confirmPassword', placeholder='Confirm Password', required)
+            .form-group
+              .col-sm-offset-3.col-sm-8
+                button.btn.btn-save.pull-right(type='submit')
+                  | Signup
+        .col-md-5.purple-block
+            h3 Forms. Over your favourite messaging channel.
+            p With Chatform, you can design forms and surveys that anyone can fill using their favourite messaging apps, SMS, or web chat.
+
+            p Already have an account? <a href="/login"><u>Sign In</u></a>
+
+        .col-md-1
+          p &nbsp;

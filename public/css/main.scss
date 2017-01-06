@@ -127,6 +127,7 @@ html,body,.container {
   padding:10px 20px 10px 20px;
   box-shadow:none;
   margin-left: 10px;
+  margin-top: 20px;
 }
 
 .btn-secondary {
@@ -138,6 +139,65 @@ html,body,.container {
   font-size: 24px;
   color:#90EEE1;
   border-color:#90EEE1;
+  margin-top: 20px;
+}
+
+.btn-secondary.btn-secondary-purple {
+  background-color:#6356E5;
+  border-color:#F3F6F6;
+  color:#F3F6F6;
+  font-size:12px;
+  height:50%;
+}
+
+.form-block {
+  padding-top:50px;
+}
+
+.purple-block a {
+  color:#F3F6F6;
+  font-style: underline;
+}
+
+.white-block {
+  background-color: #F3F6F6;
+  padding-left:100px;
+  padding-top:80px;
+  padding-bottom:80px;
+}
+
+.white-block h3 {
+  padding-bottom:20px;
+  color:#6356E5;
+}
+
+.white-block input {
+  border-radius: 20px;
+  font-size:18px;
+  height:50px;
+  margin-bottom:20px;
+  width:90%;
+  background-color:#F3F6F6;
+  border-color:#90EEE1;
+  color:#6356E5;
+  font-weight: bold;
+}
+
+form.input:focus {
+  outline:none;
+}
+
+.white-block input::-webkit-input-placeholder {
+  color:#90EEE1;
+}
+
+.purple-block {
+    margin-top:100px;
+    background-color: #6356E5;
+    color: #F3F6F6;
+    padding-top:80px;
+    padding-bottom:80px;
+    padding-left:40px;
 }
 
 .btn-question:hover {
@@ -148,6 +208,15 @@ html,body,.container {
   background-image: url(/logo-icon.png);
   width:76px;
   height:50px;
+}
+
+.logo-full {
+  background-image: url(/logo.png);
+  background-repeat: none;
+  width:541px;
+  height:90px;
+  margin-top:40px;
+  margin-left:120px;
 }
 
 .btn-remove {
@@ -224,13 +293,26 @@ textarea {
 }
 
 .form-tile {
-  width:300px;
+  width:290px;
   float:left;
   background-color: #F3F6F6;
-  margin:10px;
+  margin:5px;
   padding: 0px 5px 0px 5px;
 }
 
 .question-list {
   display: table-cell;
+}
+
+.green-text {
+  color: #90EEE1;
+}
+
+.left-column h1 {
+  font-size: 64px;
+}
+
+.left-column li {
+  font-weight:bold;
+  color: #90EEE1;
 }
