@@ -216,7 +216,7 @@ exports.getResponses = function(req, res, next) {
         res.set('Content-Type', 'text/csv');
         res.send(csv);
 
-      }, {emptyFieldValue: '', delimeter:{'field':'\t'}});
+      }, {emptyFieldValue: '', delimeter:{'field':'\t','wrap':'"'}});
     });
  });
 }
