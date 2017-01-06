@@ -96,7 +96,11 @@ const Smooch = require('smooch-core');
                 responder.response = {};
               }
 
-              responder.response['\"' + form.fields[questionIndex].question + '\"'] = job.data.messageText;
+              question = form.fields[questionIndex].question;
+              question = question.replace('.', '\u{FF0E}');
+              question = question.replace('$', '\u{FF04}');
+
+              responder.response[question] = job.data.messageText;
               responder.markModified('response');
             }
 
