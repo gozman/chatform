@@ -8,6 +8,14 @@ const Smooch = require('smooch-core');
  * POST /bot/:formId
  *
  */
+function sendSmoochMessage = (appUser, message) => {
+  return smooch.appUsers.sendMessage(appUser._id, {
+      role: 'appMaker',
+      type: 'text',
+      text: message
+  })
+}
+
 exports.postMessage = (req, res, next) => {
   //Get form
   Form.findById(req.params.formId, (err, form) => {
@@ -70,11 +78,7 @@ exports.postMessage = (req, res, next) => {
             form.responseCount = count;
             form.save((err) => {
               if(form.endMessage && form.endMessage.length) {
-                smooch.appUsers.sendMessage(appUser._id, {
-                    role: 'appMaker',
-                    type: 'text',
-                    text: form.endMessage
-                }).then((response) => {
+                sendSmoochMessage(appUser, form.endMessage).then((response) => {
                   return res.sendStatus(200);
                 }, (error) => {console.log(err); res.sendStatus(500);});
               } else {
@@ -85,35 +89,19 @@ exports.postMessage = (req, res, next) => {
         } else if(Object.keys(responder.response).length == 0) {
           //Starting off the survey
           if(form.startMessage && form.startMessage.length) {
-            smooch.appUsers.sendMessage(appUser._id, {
-                role: 'appMaker',
-                type: 'text',
-                text: form.startMessage
-            }).then((response) => {
-              smooch.appUsers.sendMessage(appUser._id, {
-                  role: 'appMaker',
-                  type: 'text',
-                  text: form.fields[0].question
-              }, (error) => {console.log("START MESSAGE ERROR " + err); res.sendStatus(500);}).then((response) => {
+            sendSmoochMessage(appUser, form.startMessage).then((response) => {
+              sendSmoochMessage(appUser, form.fields[0].question).then((response) => {
                 return res.sendStatus(200);
-              }, (error) => {console.log("FIRST QUESTION ERROR " + err); res.sendStatus(500);});
-            });
+              }, (error) => {console.log("SEND FIRST QUESTION ERROR " + err); return res.sendStatus(500);});
+            }, (error) => {console.log("START MESSAGE ERROR " + err); return res.sendStatus(500);});
           } else {
-            smooch.appUsers.sendMessage(appUser._id, {
-                role: 'appMaker',
-                type: 'text',
-                text: form.fields[0].question
-            }).then((response) => {
+            sendSmoochMessage(appUser, form.fields[0].question).then((response) => {
               return res.sendStatus(200);
             }, (error) => {console.log("PATH B ERROR"); console.log(err); res.sendStatus(500);});
           }
         } else {
           //Mid survey!
-          smooch.appUsers.sendMessage(appUser._id, {
-              role: 'appMaker',
-              type: 'text',
-              text: form.fields[Object.keys(responder.response).length].question
-          }).then((response) => {
+          sendSmoochMessage(appUser, form.fields[Object.keys(responder.response).length].question).then((response) => {
             return res.sendStatus(200);
           });
         }
