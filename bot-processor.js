@@ -17,6 +17,11 @@ const Smooch = require('smooch-core');
 
 
   function sendSmoochMessage(s, appUser, message) {
+    s.appUsers.typingActivity(appUser._id, {
+      role:'appMaker',
+      type:'typing:start'
+    }).then((response) => {},(err) => {});
+
     //Are we sending a plain message?
     if(message && message.question) {
       if(message.answers.length) {
