@@ -118,6 +118,17 @@ html,body,.container {
   box-shadow:none;
 }
 
+.btn-q-purple {
+  background-color:#6356E5;
+  color:#F3F6F6;
+}
+
+.btn-q-purple-trans {
+  color:#6356E5;
+  background-color:transparent;
+  border-color:#6356E5;
+}
+
 .btn-save {
   border-radius:24px;
   background-color:#90EEE1;
@@ -264,6 +275,27 @@ form.input:focus {
   color: #90EEE1;
 }
 
+.question-panel input {
+  border: none;
+  background-color: #E9F5F4;
+  font-weight:normal;
+  color: #6356E5;
+}
+
+.question-panel input::-webkit-input-placeholder  {
+  color: #90EEE1;
+}
+
+.add-answer {
+  color: #90EEE1;
+  margin-left:10px;
+}
+
+.remove-answer {
+  color: #90EEE1;
+  margin-left:10px;
+}
+
 .meta-input {
   background-color: #DCF0F6;
   color: #6356E5;
@@ -319,6 +351,10 @@ textarea {
 #add_text_question {
   margin-top:250px;
   margin-left: 100px;
+}
+
+.left-panel-pad {
+  margin-left: 100px
 }
 
 #add_multiple_choice_question {

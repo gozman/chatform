@@ -5,10 +5,12 @@ block content
       include partials/header
 
       p
-        a.btn.btn-question(id='add_text_question', href="#") Add Short Answer Question
+        a.btn.btn-question(id='add_text_question', href="#") Add Question
+      p &nbsp;
       p
-        a.btn.btn-question(id='add_multiple_choice_question', href="#") Add Multiple Choice Question
-
+        a.btn.btn-question.btn-q-purple.left-panel-pad(id='submit-form') Save
+      p
+        a.btn.btn-question.btn-q-purple-trans.left-panel-pad(href="/forms") Cancel
 
       form.form-horizontal(method='POST')
         input(type='hidden', name='_csrf', value=_csrf)
@@ -28,6 +30,3 @@ block content
         input.meta-input(type='text', name='startMessage', id='startMessage', autofocus=true, value=formInfo.startMessage, placeholder="Welcome Message (optional)")
 
         input.meta-input(type='text', name='endMessage', id='endMessage', autofocus=true, value=formInfo.endMessage, placeholder="Goodbye Message (optional)")
-
-        a.btn.btn-save.pull-right(id='submit-form') Save
-        a.btn.btn-secondary.pull-right(href="/forms") Cancel
