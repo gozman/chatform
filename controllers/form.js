@@ -216,7 +216,13 @@ exports.getResponses = function(req, res, next) {
         res.set('Content-Type', 'text/csv');
         res.send(csv);
 
-      }, {emptyFieldValue: '', delimeter:{'field':'\t','wrap':'"'}});
+      }, {
+          emptyFieldValue: '',
+          delimiter:{
+            'field':'\t',
+            'wrap':'"'
+          }
+        });
     });
  });
 }
