@@ -283,3 +283,7 @@ and (orientation : portrait) {
     text-align: left;
     }
  }
+
+ #sk-messenger-button {
+   display:none;
+ }
