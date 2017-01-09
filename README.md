@@ -47,17 +47,23 @@ FAQ
 
 ### Why did you build this?
 
-Because.
+I'm the co-founder of Smooch.io and spend a lot of my time thinking about how messaging is going to re-shape the way we interact with technology. A few months ago, we transformed our product's on-boarding: from a set of static web forms to a completely [conversational flow](http://blog.smooch.io/our-newest-hire-is-a-bot/). This simple change drove 12% more people to complete the new on-boarding. As a result, some of us at Smooch began to wonder how engaging a traditional web form could become if it were made conversational and delivered over the user's favourite messaging app.
+
+Fast forward to early 2017, back from Christmas vacation and with an urge to code. Lucie and I decided to join forces and build chatform to demonstrate how easily one could build a conversational form builder using the Smooch APIs. We built this project really quickly, there are probably lots of bugs, but we just had to get it out to the world and really hope you enjoy it.
 
 ### Why is this free?
 
-Because.
+We want to inspire more people to think about how messaging interactions can change the way their users interact with their software. Chatform is one example of this, but what if Typeform, Google Forms or Wufoo went conversational? Will we begin to see more and more people conversing with their forms and surveys, instead of mechanically filling them out?
 
 ### What messaging channels does this support?
 
+Chatform uses [smooch.io](https://smooch.io) to send and receive messages through one API to a wide variety of [supported messaging channels](https://app.smooch.io/integrations/categories/customer-channels). You can publish surveys built with chatform across any of the messaging channels that Smooch supports.
+
 ### Can you use carousels? Lists? Images?
 
-Yes you can!
+Yes you can! But...
+
+We only had 48 hours to complete this project and as such, we couldn't build in support for all of the [rich messaging features](https://smooch.io/rich-messaging/) that Smooch.io supports. If there's something you'd like to see, why not submit a pull request? The [Smooch API Reference](http://docs.smooch.io/rest) contains everything you need to add support for more messaging features to Chatform. Best of all, if you implement any of those features, they'll become available across all channels that Smooch supports.
 
 Contributing
 ------------
