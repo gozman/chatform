@@ -300,6 +300,7 @@ exports.getResponses = function(req, res, next) {
 
       //Build clean csv
       var clean = [];
+      var longestKeyArray = [];
       for(var i=0; i<responders.length; i++) {
         var response = responders[i].response;
 
@@ -312,7 +313,20 @@ exports.getResponses = function(req, res, next) {
 
           console.log("RESPONSE " + i);
           console.log(response);
+
+          if(Object.keys(response).length > longestKeyArray.length) {
+            longestKeyArray = Object.keys(response);
+          }
+
           clean.push(response);
+        }
+      }
+
+      for(var i=0; i<clean.length; i++) {
+        for(var j=0; j<longestKeyArray.length; j++) {
+          if(!clean[i][longestKeyArray[j]]) {
+            clean[i][longestKeyArray[j]] = '';
+          }
         }
       }
 
