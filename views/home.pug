@@ -79,9 +79,8 @@ html
           .nav
             ul
               li
-                a(href='https://smooch.io') about smooch.io
-              li
-                a(href='/login') sign in
+                if !user
+                  a(href='/login') sign in
               ul
     section.abstract
       .main-wrapper
@@ -90,7 +89,7 @@ html
         .right
           .title
             // h1>We bring your survey to life</h1
-            h1.margin-right Turn your survey into a conversation
+            h1.margin-right Turn your survey into a conversation on any messaging app.
             .btn
               if user
                 a(href='/forms') Your Forms
@@ -102,7 +101,7 @@ html
         .left
           .title
             // h1 class="margin-left">How </br>it </br>works</h1
-            h1.margin-left.margin-right Engage with users in a more compelling way
+            h1.margin-left.margin-right Conversations: a more human approach to forms and surveys
             .rect.margin-left
         .right
           .details.margin-left
@@ -111,38 +110,33 @@ html
                 img(src='/icon_focus.svg', alt='chatform-illustration')
               .text
                 p
-                  | Keep users focused and engaged by questioning them on the beat of a conversation
+                  | Your users can respond to your survey using their favourite messaging app
             .row
               .icon
                 img(src='/icon_boost.svg', alt='chatform-illustration')
               .text
                 p
-                  | Boost completion rates by making the act of answering more natural
+                  | Boost your survey completion rates with engaging messaging conversations.
             .row
               .icon
                 img(src='/icon_worflow.svg', alt='chatform-illustration')
               .text
                 p
-                  | Without even changing your workflow by downloading the responses as CSV or XLSX
+                  | Responses are instantly available as CSV and can be easily imported into Excel, Google Sheets, Numbers and more.
             .row
               .icon
                 img(src='/icon_channels.svg', alt='chatform-illustration')
               .text
                 p
-                  | Deploy it on whatever channel you want using
-                  a(href='https://smooch.io/', target='_blanck') smooch.io
+                  | Reach users anywhere using the power of the <a href='https://smooch.io'>smooch.io</a> messaging platform.
             .row
               .icon
                 img(src='/icon_open_source.svg', alt='chatform-illustration')
               .text
                 p
-                  | Brillant solutions are even better when they are
-                  a(href='https://smooch.io/', target='_blanck') Open Source
-                  | , we can't wait to see what you will do with it.
+                  | Chatform is entirely <a href="https://github.com/gozman/chatform">open source</a>, check it out on github, modify it and deploy it to your own server
             .btn
               a(href='') Try a survey
     footer
       .sponsor
-        p Powered by
-        a(href='https://smooch.io/', target='_blanck')
-          img(src='/smooch_logo.svg', alt="smooch's logo")
+        p Built by <a href="http://twitter.com/gozmike">Mike Gozzo</a> and <a href="http://lucieletouze.com/">Lucie Le Touze<a> at a Smooch.io hackathon in January 2017.

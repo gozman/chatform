@@ -1,14 +1,10 @@
 ![](https://lh4.googleusercontent.com/-PVw-ZUM9vV8/UuWeH51os0I/AAAAAAAAD6M/0Ikg7viJftQ/w1286-h566-no/hackathon-starter-logo.jpg)
-Hackathon Starter 
+Chatform.ai
 =======================
 
-[![Dependency Status](https://david-dm.org/sahat/hackathon-starter/status.svg?style=flat)](https://david-dm.org/sahat/hackathon-starter) [![Build Status](https://travis-ci.org/sahat/hackathon-starter.svg?branch=master)](https://travis-ci.org/sahat/hackathon-starter) [![Join the chat at https://gitter.im/sahat/hackathon-starter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/sahat/hackathon-starter?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Thinkful Pair on Node](https://tf-assets-staging.s3.amazonaws.com/badges/thinkful_repo_badge.svg)](http://start.thinkful.com/node/)
+**Live Demo**: http://chatform.ai
 
-**Live Demo**: http://hackathonstarter-sahat.rhcloud.com
-
-Jump to [What's new in 4.3.0?](#changelog)
-
-:bulb: Looking for ES5 code? [Click here](https://github.com/sahat/hackathon-starter/tree/es5).
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 A boilerplate for **Node.js** web applications.
 
@@ -22,32 +18,6 @@ When I started this project, my primary focus was on **simplicity** and **ease o
 I also tried to make it as **generic** and **reusable** as possible to cover most use cases of hackathon web apps,
 without being too specific. In the worst case you can use this as a learning guide for your projects,
 if for example you are only interested in **Sign in with Google** authentication and nothing else.
-
-### Testimonials
-
-> [**“Nice! That README alone is already gold!”**](https://www.producthunt.com/tech/hackathon-starter#comment-224732)<br>
-> — Adrian Le Bas
-
-> [**“Awesome. Simply awesome.”**](https://www.producthunt.com/tech/hackathon-starter#comment-224966)<br>
-> — Steven Rueter
-
-> [**“I'm using it for a year now and many projects, it's an awesome boilerplate and the project is well maintained!”**](https://www.producthunt.com/tech/hackathon-starter#comment-228610)<br>
-> — Kevin Granger
-
-> **“Small world with Sahat's project. We were using his hackathon starter for our hackathon this past weekend and got some prizes. Really handy repo!”**<br>
-> — Interview candidate for one of the companies I used to work with.
-
-<h4 align="center">Modern Theme</h4>
-
-![](https://lh6.googleusercontent.com/-KQTmCFNK6MM/U7OZpznjDuI/AAAAAAAAERc/h3jR27Uy1lE/w1366-h1006-no/Screenshot+2014-07-02+01.32.22.png)
-
-<h4 align="center">Flatly Bootstrap Theme</h4>
-
-![](https://lh5.googleusercontent.com/-oJ-7bSYisRY/U1a-WhK_LoI/AAAAAAAAECM/a04fVYgefzw/w1474-h1098-no/Screen+Shot+2014-04-22+at+3.08.33+PM.png)
-
-<h4 align="center">API Examples</h4>
-
-![](https://lh5.googleusercontent.com/-BJD2wK8CvC8/VLodBsyL-NI/AAAAAAAAEx0/SafE6o_qq_I/w1818-h1186-no/Screenshot%2B2015-01-17%2B00.25.49.png)
 
 Table of Contents
 -----------------
@@ -145,7 +115,7 @@ restart the server each time you make a small change in code. To install, run
 
 Yarn vs NPM
 -----------
-Yarn is a new JavaScript package manager built by Facebook, Google, Exponent and Tilde. Yarn is not an attempt to replace `npm`, 
+Yarn is a new JavaScript package manager built by Facebook, Google, Exponent and Tilde. Yarn is not an attempt to replace `npm`,
 it's simply an alternative CLI client for fetching modules from the npm registry but it does have some unique benefits over using `npm`,
 most noticeably speed and consistency (via a lock file which ensures that only specific versions of dependencies are installed).
 Hackathon Starter includes a `yarn.lock` file by default and as project dependencies are updated, this file will be updated to reflect those changes.
@@ -1106,7 +1076,7 @@ var YYYY = now.getFullYear();
 
 if (DD < 10) {
   DD = '0' + DD;
-} 
+}
 
 if (MM < 10) {
   MM = '0' + MM;
@@ -1377,7 +1347,7 @@ Changelog
 - Flash an error message when updating email to that which is already taken
 - Removing an email address during profile update is no longer possible
 - PayPal API example now uses *return_url* and *cancel_url* from `.env`
-- Added client-side `required=true` attributes to input fields 
+- Added client-side `required=true` attributes to input fields
 - Fixed broken `show()` function in the GitHub API example
 - Fixed YQL query in the Yahoo Weather API example
 - Fixed *Can't set headers after they are sent* error in Stripe API example

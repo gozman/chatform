@@ -2,10 +2,8 @@
   ul.nav.navbar-nav
     li.icon-logo
 
-    li(class=(title == 'Home') ? 'active' : undefined)
-      a(href='/forms') Forms
     if user
-      li
-        a(href='/status') Status
+      li(class=(title == 'Home') ? 'active' : undefined)
+        a(href='/forms') Forms
       li
         a(href="/logout") Log out

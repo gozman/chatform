@@ -1,0 +1,23 @@
+{
+    "name": "chatform",
+    "description": "Create forms and surveys that are answered through your favourite messaging app, over Smooch",
+    "website": "http://chatform.ai",
+    "repository": "https://github.com/gozman/chatform",
+    "keywords": [
+        "Smooch",
+        "messaging",
+        "bots",
+        "surveys",
+        "forms"
+    ],
+    "addons": [
+        "mongolab:sandbox",
+        "heroku-redis:hobby-dev"
+    ],
+    "env": {
+      "CHATFORM_BASE_URL": {
+        "description": "The URL to your deployed instance of chatform. For example: https://app-name.herokuapp.com"
+      }
+    },
+    "generator": "https://www.expeditedssl.com/heroku-button-maker"
+}
