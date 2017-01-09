@@ -78,9 +78,11 @@ html
         .right
           .nav
             ul
-              li
-                if !user
+              if !user
+                li
                   a(href='/login') sign in
+              li
+                a(href='https://github.com/gozman/chatform') github
               ul
     section.abstract
       .main-wrapper
@@ -96,6 +98,7 @@ html
               else
                 a(href='/signup') Sign Up
               a(href='#' id="watch-video") Watch a video
+
     section.overview
       .main-wrapper
         .left
@@ -110,13 +113,13 @@ html
                 img(src='/icon_focus.svg', alt='chatform-illustration')
               .text
                 p
-                  | Your users can respond to your survey using their favourite messaging app
+                  | Your users can respond to your survey using their favourite messaging app. You can supervise using Slack or other <a href="https://app.smooch.io/integrations/categories/business-systems">business system</a>.
             .row
               .icon
                 img(src='/icon_boost.svg', alt='chatform-illustration')
               .text
                 p
-                  | Boost your survey completion rates with engaging messaging conversations.
+                  | Boost your survey completion rates with engaging messaging conversations that go beyond boring web forms.
             .row
               .icon
                 img(src='/icon_worflow.svg', alt='chatform-illustration')
