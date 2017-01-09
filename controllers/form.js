@@ -302,7 +302,7 @@ exports.getResponses = function(req, res, next) {
       var clean = [];
       for(var i=0; i<responders.length; i++) {
         console.log("RESPONDER: " + i);
-        console.log(JSON.stringify(respnders[i], null, 2));
+        console.log(JSON.stringify(responders[i], null, 2));
         var response = responders[i].response;
 
         response.givenName = responders[i].appUser.givenName;
