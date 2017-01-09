@@ -303,7 +303,7 @@ exports.getResponses = function(req, res, next) {
       for(var i=0; i<responders.length; i++) {
         var response = responders[i].response;
 
-        if(response && Object.keys(response).length == Object.keys(form.fields).length) {
+        if(response) {
           response.givenName = responders[i].appUser.givenName;
           response.surname = responders[i].appUser.surname;
           response.platform = responders[i].appUser.clients[0].platform;
