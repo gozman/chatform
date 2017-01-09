@@ -32,7 +32,6 @@ header, section, footer {
     transform: translateX(-50%);
 }
 header{
-    position: fixed;
     top:0;
     left: 50%;
     transform: translateX(-50%);
