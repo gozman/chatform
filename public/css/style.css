@@ -22,9 +22,15 @@ body {
 header, section, footer {
     margin-left: auto;
     margin-right: auto;
-    max-width: 1600px;
+    /*max-width: 1600px;*/
 }
-
+.header-wrapper, .main-wrapper{
+    /*max-width: 1600px;*/
+    height: 100%;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
 header{
     position: fixed;
     top:0;
@@ -42,12 +48,13 @@ section{
     width:100%;
     /*padding: 5rem 0;*/
 }
+
 h1{
     text-transform: uppercase;
     /*font-size: 5em;
     width: 75%;*/
     padding-bottom: 45px;
-    font-size: 4.3em;
+    font-size: 4.3vmax;
     /*margin-right: 100px;*/
 }
 .btn a{
@@ -62,11 +69,11 @@ a{
     text-decoration: none;
 }
 .margin-left{
-    margin-left: 100px;
-    margin-right: 0px;
+    /*margin-left: 100px;*/
+    margin-left: 15%;
 }
 .margin-right{
-    margin-right: 100px;
+    margin-right: 15%;
 }
 .left, .right{
     display: inline-block;
@@ -144,8 +151,8 @@ a{
 }
 .title, .details{
     position: relative;
-    margin-top: 50%;
-    transform: translateY(-35%);
+    top: 50%;
+    transform: translateY(-50%);
 }
 .overview .row{
     height: 25%;
@@ -216,3 +223,63 @@ footer{
     top: 0.19rem;
     margin-left: 0.19rem;
 }
+
+@media only screen
+and (min-device-width : 280px)
+and (max-device-width : 960px)
+and (orientation : portrait) {
+    section {
+    height: auto;
+    }
+    .header-wrapper, .main-wrapper{
+        text-align: center;
+    }
+    .abstract .left, .abstract .right, .overview .left, .overview .right{
+        display: block;
+        vertical-align: top;
+        width: 100%;
+        height: auto;
+    }
+    .abstract .left img {
+    width: 80%;
+    position: relative;
+    top: 0;
+    transform: translateY(0);
+    margin-top: 100px;
+    }
+    .abstract .btn, .overview .btn{
+        margin-bottom: 105px;
+    }
+    .title, .details {
+    position: relative;
+    padding: 0 10%;
+    text-align: center;
+    top: 0;
+    transform: translateY(0);
+    height: 100%;
+    }
+    .details {
+    margin-top: 85px;
+    }
+    h1 {
+    padding: 85px 0;
+    }
+    .margin-left{
+        margin-left: 0;
+    }
+    .margin-right{
+        margin-right: 0;
+    }
+    .overview .rect {
+    width: 200px;
+    height: 15px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #90eee1;
+    margin-bottom: 85px; */
+    }
+    .overview .text {
+    text-align: left;
+    }
+ }
