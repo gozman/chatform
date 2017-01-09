@@ -301,11 +301,9 @@ exports.getResponses = function(req, res, next) {
       //Build clean csv
       var clean = [];
       for(var i=0; i<responders.length; i++) {
-        console.log("RESPONDER: " + i);
-        console.log(JSON.stringify(responders[i], null, 2));
         var response = responders[i].response;
 
-        if(response && response.appUser) {
+        if(response) {
           response.givenName = responders[i].appUser.givenName;
           response.surname = responders[i].appUser.surname;
           response.platform = responders[i].appUser.clients[0].platform;
