@@ -305,15 +305,17 @@ exports.getResponses = function(req, res, next) {
         console.log(JSON.stringify(responders[i], null, 2));
         var response = responders[i].response;
 
-        response.givenName = responders[i].appUser.givenName;
-        response.surname = responders[i].appUser.surname;
-        response.platform = responders[i].appUser.clients[0].platform;
-        response.date = responders[i].appUser.signedUpAt;
-        response.appUserId = responders[i].appUser._id;
+        if(response && response.appUser) {
+          response.givenName = responders[i].appUser.givenName;
+          response.surname = responders[i].appUser.surname;
+          response.platform = responders[i].appUser.clients[0].platform;
+          response.date = responders[i].appUser.signedUpAt;
+          response.appUserId = responders[i].appUser._id;
 
-        console.log("RESPONSE " + i);
-        console.log(response);
-        clean.push(response);
+          console.log("RESPONSE " + i);
+          console.log(response);
+          clean.push(response);
+        }
       }
 
       exporter.json2csv(clean, (err, csv) => {
