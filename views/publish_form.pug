@@ -1,0 +1,18 @@
+extends layout
+
+block content
+    .col-md-5.left-column.no-float
+      include partials/header
+
+    .col-md-7.right-column.no-float(id='question-list')
+      h3 Publish Form: #{formInfo.name}
+
+      .offset-md-1.col-md-5.no-float
+        form.form-horizontal(method='POST')
+          input(type='hidden', name='_csrf', value=_csrf)
+          input.meta-input(type='text', name='keyId', id='keyId', autofocus=true, placeholder="Smooch Key ID")
+          input.meta-input(type='text', name='secret', id='secret', autofocus=true, placeholder="Smooch Secret")
+
+          button.btn.btn-question.btn-q-purple.pull-right(type='submit') Publish
+          div.pull-right &nbsp;&nbsp;&nbsp;&nbsp;
+          a.btn.btn-question.btn-q-purple-trans.pull-right(href="/forms") Cancel

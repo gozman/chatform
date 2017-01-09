@@ -4,6 +4,41 @@ const Responder = require('../models/Responder');
 const request = require('request');
 const Smooch = require('smooch-core');
 const exporter = require('json-2-csv')
+const jwt = require('jsonwebtoken');
+
+function publishForm(state, access_token, res) {
+  Form.findById(state, (err, theForm) => {
+    if(err) {
+      console.log(err);
+      res.redirect("/forms");
+    }
+
+    theForm.smoochToken = access_token;
+    theForm.save((err, result) => {
+      //Create a webhook and point it at the
+      var smooch = new Smooch({jwt:access_token});
+
+      smooch.webhooks.create({
+        target: process.env.CHATFORM_BASE_URL + '/bot/' + theForm._id,
+        triggers: ['message:appUser']
+      }).then((response) => {
+        console.log(response);
+
+        theForm.smoochWebHookId = response.webhook._id;
+        theForm.save((err) => {
+          if(err) {
+            console.log(err);
+            res.redirect('/forms');
+          }
+
+          res.redirect('/forms');
+        });
+      });
+    })
+  });
+}
+
+
 /**
  * GET /forms
  *
@@ -14,7 +49,7 @@ const exporter = require('json-2-csv')
   }
 
   Form.find({ownerId: req.user._id}, (err, docs) => {
-      res.render('forms', { title: 'Your Forms', forms: docs });
+      res.render('forms', { title: 'Your Forms', forms: docs});
   });
 }
 
@@ -63,6 +98,78 @@ exports.newForm = (req, res) => {
     res.render('edit_form', { title: form.name, formInfo: form});
   });
 };
+
+/**
+ * GET /forms/:formId/publish
+ *
+ */
+exports.getPublishForm = (req, res, next) => {
+  if (!req.user) {
+    return res.redirect('/login');
+  }
+
+  console.log(req.params.formId);
+  Form.findById(req.params.formId, (err, form) => {
+    console.log(form);
+    if(err) {
+      console.log(err);
+      return res.redirect('/forms');
+    }
+
+    if(form.ownerId != req.user._id.toString()) {
+      console.log("oops!");
+      return res.send(401, "You do not have access to this form.");
+    }
+
+    if(process.env.SMOOCH_CLIENT_ID && process.env.SMOOCH_CLIENT_ID.length > 0) {
+      //oauth is supported...
+      return res.redirect("https://app.smooch.io/oauth/authorize?client_id=chatform&response_type=code&state="+form._id);
+    }
+
+    res.render('publish_form', {title:form.name, formInfo: form});
+ });
+}
+
+/**
+ * GET /forms/:formId/publish
+ *
+ */
+exports.postPublishForm = (req, res, next) => {
+  if (!req.user) {
+    return res.redirect('/login');
+  }
+
+  Form.findById(req.params.formId, (err, form) => {
+
+    if(err) {
+      console.log(err);
+      return res.redirect('/forms');
+    }
+
+    if(form.ownerId != req.user._id.toString()) {
+      console.log("oops!");
+      return res.send(401, "You do not have access to this form.");
+    }
+
+
+    var token = jwt.sign({scope: 'app'}, req.body.secret, {header: {kid: req.body.keyId}});
+    var smooch = new Smooch({jwt: token});
+
+    console.log("KEY: " + req.body.keyId);
+    console.log("SECRET: " + req.body.secret);
+    console.log("jwt: " + token);
+
+    smooch.webhooks.list().then((response) => {
+      console.log("ALL GOOD, PUBLISHING FORM...");
+      console.log(response);
+      return publishForm(form._id, token, res);
+      console.log("BACK FROM PUBLISH FORM...");
+    }, (err) => {
+      console.log(err);
+      res.redirect('/forms');
+    });
+ });
+}
 
 /**
  * POST /forms/:formId
@@ -272,32 +379,7 @@ exports.oauthCallabck = (req, res) => {
     exchangeCode(code).then((access_token) => {
       console.log("GOT AN ACCESS TOKEN: " + access_token);
 
-      Form.findById(state, (err, theForm) => {
-        theForm.smoochToken = access_token;
-        theForm.save((err, result) => {
-          //Create a webhook and point it at the
-          var smooch = new Smooch({jwt:access_token});
-
-          console.log(process.env.CHATFORM_BASE_URL + '/bot/' + theForm._id);
-
-          smooch.webhooks.create({
-            target: process.env.CHATFORM_BASE_URL + '/bot/' + theForm._id,
-            triggers: ['message:appUser']
-          }).then((response) => {
-            console.log(response);
-
-            theForm.smoochWebHookId = response.webhook._id;
-            theForm.save((err) => {
-              if(err) {
-                console.log(err);
-                res.redirect('/forms');
-              }
-
-              res.redirect('/forms');
-            });
-          });
-        })
-      });
+      return publishForm(state, access_token, res);
     }, (err) => {
       console.log(err);
       res.redirect('/forms');

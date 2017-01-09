@@ -142,7 +142,8 @@ app.get('/forms/:formId/delete', formController.deleteForm);
 app.post('/forms/:formId', formController.postForm);
 app.post('/forms/new', formController.postForm);
 app.get('/connect-to-smooch', formController.oauthCallabck);
-
+app.get('/forms/:formId/publish', formController.getPublishForm);
+app.post('/forms/:formId/publish', formController.postPublishForm);
 /**
  * Bot controller routes
  */

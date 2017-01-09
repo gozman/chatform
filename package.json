@@ -32,6 +32,7 @@
     "github": "^6.0.2",
     "instagram-node": "^0.5.8",
     "json-2-csv": "^2.1.0",
+    "jsonwebtoken": "^7.2.1",
     "kue": "^0.11.5",
     "lastfm": "^0.9.2",
     "lob": "^3.9.0",
