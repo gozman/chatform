@@ -7,6 +7,10 @@ block content
     .col-md-7.right-column.no-float(id='question-list')
       h3 Publish Form: #{formInfo.name}
 
+      p Chatform.ai uses <a href="https://smooch.io" target="_blank">Smooch</a> to publish your forms to a variety of different messaging apps.
+
+      p Publishing with Smooch is easy, simply <a href="https://app.smooch.io/signup" target="_blank">sign up for free</a> and follow the steps outlined in the video below
+
       .offset-md-1.col-md-5.no-float
         form.form-horizontal(method='POST')
           input(type='hidden', name='_csrf', value=_csrf)
