@@ -118,7 +118,6 @@ String.prototype.replaceAll = function(search, replacement) {
                 }
               }
 
-Tell us a little bit about your background in the above skills． If you picked "Other," please describe what other skills you have.
               //console.log("SAVING RESPONDER: " + JSON.stringify(responder, null, 2));
 
               //Save response
