@@ -123,7 +123,7 @@ const Smooch = require('smooch-core');
                     if(form.endMessage && form.endMessage.length) {
                       sendSmoochMessage(smooch, appUser, form.endMessage).then((response) => {
                         done();
-                      }, (error) => {console.log(err); res.sendStatus(500);});
+                      }, (error) => {console.log(err); done();});
                     } else {
                       done();
                     }
@@ -135,12 +135,12 @@ const Smooch = require('smooch-core');
                   sendSmoochMessage(smooch, appUser, form.startMessage).then((response) => {
                     sendSmoochMessage(smooch, appUser, form.fields[0]).then((response) => {
                       done();
-                    }, (error) => {console.log("SEND FIRST QUESTION ERROR " + err); return res.sendStatus(500);});
-                  }, (error) => {console.log("START MESSAGE ERROR " + err); return res.sendStatus(500);});
+                    }, (error) => {console.log("SEND FIRST QUESTION ERROR " + err);  done();});
+                  }, (error) => {console.log("START MESSAGE ERROR " + err);  done();});
                 } else {
                   sendSmoochMessage(smooch, appUser, form.fields[0]).then((response) => {
                     done();
-                  }, (error) => {console.log("PATH B ERROR"); console.log(err); res.sendStatus(500);});
+                  }, (error) => {console.log("PATH B ERROR"); console.log(err); done();});
                 }
               } else {
                 //Mid survey!
