@@ -141,7 +141,7 @@ exports.postPublishForm = (req, res, next) => {
 
   Form.findById(req.params.formId, (err, form) => {
 
-    if(err) {
+    if(err || !req.body.secret || !req.body.keyId || !form) {
       console.log(err);
       return res.redirect('/forms');
     }
@@ -151,8 +151,14 @@ exports.postPublishForm = (req, res, next) => {
       return res.send(401, "You do not have access to this form.");
     }
 
+    var token = "";
+    if(req.body.secret.length && req.body.keyId.length) {
+      jwt.sign({scope: 'app'}, req.body.secret, {header: {kid: req.body.keyId}});
+    } else {
+      console.log(form._id + " : invalid key and secret");
+      return res.redirect('/forms');
+    }
 
-    var token = jwt.sign({scope: 'app'}, req.body.secret, {header: {kid: req.body.keyId}});
     var smooch = new Smooch({jwt: token});
 
     console.log("KEY: " + req.body.keyId);
