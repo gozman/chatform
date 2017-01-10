@@ -62,7 +62,7 @@ const Smooch = require('smooch-core');
         const appUser = job.data.appUser;
 
         Form.findById(job.data.formId, (err, form) => {
-          if(err) {
+          if(err || !form || form == null) {
             console.log(err);
             done();
           }
