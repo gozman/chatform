@@ -107,8 +107,8 @@ String.prototype.replaceAll = function(search, replacement) {
                 if(form.fields[questionIndex] && form.fields[questionIndex].question) {
 
                   question = form.fields[questionIndex].question;
-                  question.replaceAll('.', '\u{FF0E}');
-                  question.replaceAll('$', '\u{FF04}');
+                  question = question.replaceAll('.', '\u{FF0E}');
+                  question = question.replaceAll('$', '\u{FF04}');
 
                   console.log(form._id + " QUESTION: " + question);
                   console.log(form._id + " RESPONSE: \n " + JSON.stringify(responder.response, null, 2));
