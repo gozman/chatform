@@ -66,92 +66,93 @@ const Smooch = require('smooch-core');
             console.log("FORM MIGHT BE NULL");
             console.log(err);
             done("couldn't find form");
-          }
+          } else {
 
-          //Log in to Smooch
-          const smooch = new Smooch({jwt: form.smoochToken});
-          Responder.findOne({'appUserId' : appUser._id}, (err, responder) => {
-            if (err) {
-              console.log(err);
-              done();
-            }
-
-            if(!responder) {
-              responder = new Responder({
-                formId: job.data.formId,
-                appUserId: appUser._id,
-                appUser: appUser
-              });
-
-              responder.response = {};
-            } else {
-              //The message contained an answer to something that we want to track!
-              var questionIndex = 0;
-
-              if(responder.response) {
-                questionIndex = Object.keys(responder.response).length;
-                if(questionIndex >= form.fields.length) {
-                  done();
-                }
-              } else {
-                responder.response = {};
-              }
-
-              if(form.fields[questionIndex] && form.fields[questionIndex].question) {
-                question = form.fields[questionIndex].question;
-                question = question.replace('.', '\u{FF0E}');
-                question = question.replace('$', '\u{FF04}');
-
-                responder.response[question] = job.data.messageText;
-                responder.markModified('response');
-              }
-            }
-
-            //console.log("SAVING RESPONDER: " + JSON.stringify(responder, null, 2));
-
-            //Save response
-            responder.save((err) => {
-              if(err) {
+            //Log in to Smooch
+            const smooch = new Smooch({jwt: form.smoochToken});
+            Responder.findOne({'appUserId' : appUser._id}, (err, responder) => {
+              if (err) {
                 console.log(err);
                 done();
               }
 
-              //Send next question or gtfo
-              if(Object.keys(responder.response).length === form.fields.length) {
-                //All questions have been answered
-
-                Responder.count({formId: form._id}, (err, count) => {
-                  form.responseCount = count;
-                  form.save((err) => {
-                    if(form.endMessage && form.endMessage.length) {
-                      sendSmoochMessage(smooch, appUser, form.endMessage).then((response) => {
-                        done();
-                      }, (error) => {console.log(err); done();});
-                    } else {
-                      done();
-                    }
-                  });
+              if(!responder) {
+                responder = new Responder({
+                  formId: job.data.formId,
+                  appUserId: appUser._id,
+                  appUser: appUser
                 });
-              } else if(Object.keys(responder.response).length == 0) {
-                //Starting off the survey
-                if(form.startMessage && form.startMessage.length) {
-                  sendSmoochMessage(smooch, appUser, form.startMessage).then((response) => {
+
+                responder.response = {};
+              } else {
+                //The message contained an answer to something that we want to track!
+                var questionIndex = 0;
+
+                if(responder.response) {
+                  questionIndex = Object.keys(responder.response).length;
+                  if(questionIndex >= form.fields.length) {
+                    done();
+                  }
+                } else {
+                  responder.response = {};
+                }
+
+                if(form.fields[questionIndex] && form.fields[questionIndex].question) {
+                  question = form.fields[questionIndex].question;
+                  question = question.replace('.', '\u{FF0E}');
+                  question = question.replace('$', '\u{FF04}');
+
+                  responder.response[question] = job.data.messageText;
+                  responder.markModified('response');
+                }
+              }
+
+              //console.log("SAVING RESPONDER: " + JSON.stringify(responder, null, 2));
+
+              //Save response
+              responder.save((err) => {
+                if(err) {
+                  console.log(err);
+                  done();
+                }
+
+                //Send next question or gtfo
+                if(Object.keys(responder.response).length === form.fields.length) {
+                  //All questions have been answered
+
+                  Responder.count({formId: form._id}, (err, count) => {
+                    form.responseCount = count;
+                    form.save((err) => {
+                      if(form.endMessage && form.endMessage.length) {
+                        sendSmoochMessage(smooch, appUser, form.endMessage).then((response) => {
+                          done();
+                        }, (error) => {console.log(err); done();});
+                      } else {
+                        done();
+                      }
+                    });
+                  });
+                } else if(Object.keys(responder.response).length == 0) {
+                  //Starting off the survey
+                  if(form.startMessage && form.startMessage.length) {
+                    sendSmoochMessage(smooch, appUser, form.startMessage).then((response) => {
+                      sendSmoochMessage(smooch, appUser, form.fields[0]).then((response) => {
+                        done();
+                      }, (error) => {console.log("SEND FIRST QUESTION ERROR " + err);  done();});
+                    }, (error) => {console.log("START MESSAGE ERROR " + err);  done();});
+                  } else {
                     sendSmoochMessage(smooch, appUser, form.fields[0]).then((response) => {
                       done();
-                    }, (error) => {console.log("SEND FIRST QUESTION ERROR " + err);  done();});
-                  }, (error) => {console.log("START MESSAGE ERROR " + err);  done();});
+                    }, (error) => {console.log("PATH B ERROR"); console.log(err); done();});
+                  }
                 } else {
-                  sendSmoochMessage(smooch, appUser, form.fields[0]).then((response) => {
+                  //Mid survey!
+                  sendSmoochMessage(smooch, appUser, form.fields[Object.keys(responder.response).length]).then((response) => {
                     done();
-                  }, (error) => {console.log("PATH B ERROR"); console.log(err); done();});
+                  });
                 }
-              } else {
-                //Mid survey!
-                sendSmoochMessage(smooch, appUser, form.fields[Object.keys(responder.response).length]).then((response) => {
-                  done();
-                });
-              }
+              });
             });
-          });
-        });
+        }
       });
+    });
