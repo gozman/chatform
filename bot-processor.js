@@ -7,7 +7,7 @@ const Smooch = require('smooch-core');
 
 String.prototype.replaceAll = function(search, replacement) {
     var target = this;
-    return target.replace(new RegExp(search, 'g'), replacement);
+    return target.split(search).join(replacement);
 };
 
 /**
@@ -107,8 +107,8 @@ String.prototype.replaceAll = function(search, replacement) {
                 if(form.fields[questionIndex] && form.fields[questionIndex].question) {
 
                   question = form.fields[questionIndex].question;
-                  question = question.replaceAll('.', '\u{FF0E}');
-                  question = question.replaceAll('$', '\u{FF04}');
+                  question.replaceAll('.', '\u{FF0E}');
+                  question.replaceAll('$', '\u{FF04}');
 
                   console.log(form._id + " QUESTION: " + question);
                   console.log(form._id + " RESPONSE: \n " + JSON.stringify(responder.response, null, 2));
