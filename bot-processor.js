@@ -62,6 +62,8 @@ const Smooch = require('smooch-core');
         const appUser = job.data.appUser;
 
         Form.findById(job.data.formId, (err, form) => {
+          console.log("FORM ID: " + job.data.formId);
+
           if(err || !form || form == null) {
             console.log("FORM MIGHT BE NULL");
             console.log(err);
@@ -98,9 +100,13 @@ const Smooch = require('smooch-core');
                 }
 
                 if(form.fields[questionIndex] && form.fields[questionIndex].question) {
+
                   question = form.fields[questionIndex].question;
                   question = question.replace('.', '\u{FF0E}');
                   question = question.replace('$', '\u{FF04}');
+
+                  console.log("QUESTION: " + question);
+                  console.log("RESPONSE: \n " + JSON.stringify(responder.response, null, 2));
 
                   responder.response[question] = job.data.messageText;
                   responder.markModified('response');
@@ -115,6 +121,9 @@ const Smooch = require('smooch-core');
                   console.log(err);
                   done();
                 }
+
+                console.log("FORM LENGTH: " + form.fields.length);
+                console.log("RESPONSE LENGTH: " + Object.keys(responder.response).length);
 
                 //Send next question or gtfo
                 if(Object.keys(responder.response).length === form.fields.length) {
