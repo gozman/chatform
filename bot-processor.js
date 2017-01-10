@@ -63,6 +63,7 @@ const Smooch = require('smooch-core');
 
         Form.findById(job.data.formId, (err, form) => {
           if(err || !form || form == null) {
+            console.log("FORM MIGHT BE NULL");
             console.log(err);
             done();
           }
