@@ -65,7 +65,7 @@ const Smooch = require('smooch-core');
           console.log("FORM ID: " + job.data.formId);
 
           if(err || !form || form == null) {
-            console.log("FORM MIGHT BE NULL");
+            console.log(form._id + " FORM MIGHT BE NULL");
             console.log(err);
             done("couldn't find form");
           } else {
@@ -105,8 +105,8 @@ const Smooch = require('smooch-core');
                   question = question.replace('.', '\u{FF0E}');
                   question = question.replace('$', '\u{FF04}');
 
-                  console.log("QUESTION: " + question);
-                  console.log("RESPONSE: \n " + JSON.stringify(responder.response, null, 2));
+                  console.log(form._id + " QUESTION: " + question);
+                  console.log(form._id + " RESPONSE: \n " + JSON.stringify(responder.response, null, 2));
 
                   responder.response[question] = job.data.messageText;
                   responder.markModified('response');
@@ -122,8 +122,8 @@ const Smooch = require('smooch-core');
                   done();
                 }
 
-                console.log("FORM LENGTH: " + form.fields.length);
-                console.log("RESPONSE LENGTH: " + Object.keys(responder.response).length);
+                console.log(form._id + " FORM LENGTH: " + form.fields.length);
+                console.log(form._id + " RESPONSE LENGTH: " + Object.keys(responder.response).length);
 
                 //Send next question or gtfo
                 if(Object.keys(responder.response).length === form.fields.length) {
@@ -147,18 +147,18 @@ const Smooch = require('smooch-core');
                     sendSmoochMessage(smooch, appUser, form.startMessage).then((response) => {
                       sendSmoochMessage(smooch, appUser, form.fields[0]).then((response) => {
                         done();
-                      }).catch((error) => {console.log("SEND FIRST QUESTION ERROR " + err);  done();});
-                    }).catch((error) => {console.log("START MESSAGE ERROR " + err);  done();});
+                      }).catch((error) => {console.log(form._id + " SEND FIRST QUESTION ERROR " + err);  done();});
+                    }).catch((error) => {console.log(form._id + " START MESSAGE ERROR " + err);  done();});
                   } else {
                     sendSmoochMessage(smooch, appUser, form.fields[0]).then((response) => {
                       done();
-                    }).catch((error) => {console.log("PATH B ERROR"); console.log(err); done();});
+                    }).catch((error) => {console.log(form._id + " PATH B ERROR"); console.log(err); done();});
                   }
                 } else {
                   //Mid survey!
                   sendSmoochMessage(smooch, appUser, form.fields[Object.keys(responder.response).length]).then((response) => {
                     done();
-                  }).catch((error) => {console.log("PATH C ERROR"); console.log(err); done();});
+                  }).catch((error) => {console.log(form._id + " PATH C ERROR"); console.log(err); done();});
                 }
               });
             });
