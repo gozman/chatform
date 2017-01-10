@@ -65,7 +65,7 @@ const Smooch = require('smooch-core');
           if(err || !form || form == null) {
             console.log("FORM MIGHT BE NULL");
             console.log(err);
-            done();
+            done("couldn't find form");
           }
 
           //Log in to Smooch
