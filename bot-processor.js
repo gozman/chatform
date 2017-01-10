@@ -5,6 +5,11 @@ const Form = require('./models/Form');
 const Responder = require('./models/Responder');
 const Smooch = require('smooch-core');
 
+String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.replace(new RegExp(search, 'g'), replacement);
+};
+
 /**
  * Connect to MongoDB.
  */
@@ -102,8 +107,8 @@ const Smooch = require('smooch-core');
                 if(form.fields[questionIndex] && form.fields[questionIndex].question) {
 
                   question = form.fields[questionIndex].question;
-                  question = question.replace('.', '\u{FF0E}');
-                  question = question.replace('$', '\u{FF04}');
+                  question = question.replaceAll('.', '\u{FF0E}');
+                  question = question.replaceAll('$', '\u{FF04}');
 
                   console.log(form._id + " QUESTION: " + question);
                   console.log(form._id + " RESPONSE: \n " + JSON.stringify(responder.response, null, 2));
@@ -113,6 +118,7 @@ const Smooch = require('smooch-core');
                 }
               }
 
+Tell us a little bit about your background in the above skills． If you picked "Other," please describe what other skills you have.
               //console.log("SAVING RESPONDER: " + JSON.stringify(responder, null, 2));
 
               //Save response
