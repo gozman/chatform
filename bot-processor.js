@@ -96,12 +96,14 @@ const Smooch = require('smooch-core');
                 responder.response = {};
               }
 
-              question = form.fields[questionIndex].question;
-              question = question.replace('.', '\u{FF0E}');
-              question = question.replace('$', '\u{FF04}');
+              if(form.fields[questionIndex] && form.fields[questionIndex].question) {
+                question = form.fields[questionIndex].question;
+                question = question.replace('.', '\u{FF0E}');
+                question = question.replace('$', '\u{FF04}');
 
-              responder.response[question] = job.data.messageText;
-              responder.markModified('response');
+                responder.response[question] = job.data.messageText;
+                responder.markModified('response');
+              }
             }
 
             //console.log("SAVING RESPONDER: " + JSON.stringify(responder, null, 2));
