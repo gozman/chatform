@@ -153,6 +153,7 @@ exports.postPublishForm = (req, res, next) => {
 
     var token = "";
     if(req.body.secret.length && req.body.keyId.length) {
+      console.log(form._id + " JWT INFO " + JSON.stringify(req.body, null, 2));
       jwt.sign({scope: 'app'}, req.body.secret, {header: {kid: req.body.keyId}});
     } else {
       console.log(form._id + " : invalid key and secret");
