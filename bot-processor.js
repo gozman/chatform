@@ -70,7 +70,7 @@ String.prototype.replaceAll = function(search, replacement) {
           console.log("FORM ID: " + job.data.formId);
 
           if(err || !form || form == null) {
-            console.log(form._id + " FORM MIGHT BE NULL");
+            console.log(job.data.formId + " FORM MIGHT BE NULL");
             console.log(err);
             done("couldn't find form");
           } else {
